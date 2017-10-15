@@ -19,9 +19,9 @@ function load_glass(){
 };
 
 function load_compost(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~leame/Interactive_Map/glass.html"
+	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~leame/Interactive_Map/compost.html"	
 };
 
 function load_landfill(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~leame/Interactive_Map/glass.html"
+	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~leame/Interactive_Map/landfill.html"
 };
