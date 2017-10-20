@@ -1,18 +1,13 @@
 <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 'On');
+    include 'sqlInfo.php';
 
-$dbhost = 'oniddb.cws.oregonstate.edu';
-$dbname = 'niguang-db';
-$dbuser = 'niguang-db';
-$dbpass = 'eOPnPwjgKL3RLRgf';
+    //connect to database
+    $mysqli = new mysqli($dbhost, $dbname, $dbpass, $dbuser);
 
-$mysql_handle = mysql_connect($dbhost, $dbuser, $dbpass)
-    or die("Error connecting to database server");
-
-mysql_select_db($dbname, $mysql_handle)
-    or die("Error selecting database: $dbname");
-
-echo 'Successfully connected to database!';
-
-mysql_close($mysql_handle);
-
+    //check connection
+    if(!$mysqli || $mysqli->connect_errno) {
+        die("connection error" .$mysqli->connect_errno ."".$mysqli->connect_error);
+    }
 ?>
