@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-<meta charset="utf-8">
-<title>Carboard Map</title>
-<style>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Carboard Map</title>
+    <style>
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 #map {
@@ -21,8 +20,26 @@ padding: 0;
 </head>
 
 <body>
-    <div id="map"></div>
-    <script>
+<div id="map"></div>
+<script>
+
+function downloadUrl(url,callback) {
+ var request = window.ActiveXObject ?
+     new ActiveXObject('Microsoft.XMLHTTP') :
+     new XMLHttpRequest;
+
+ request.onreadystatechange = function() {
+   if (request.readyState == 4) {
+     //request.onreadystatechange = doNothing;
+     callback(request, request.status);
+   }
+ };
+
+ request.open('GET', url, true);
+ request.send(null);
+}
+
+
 function initMap() {
 	var OSU = {
 		lat: 44.562854,
@@ -32,36 +49,29 @@ function initMap() {
 		zoom: 10,
 		center: OSU
 	});
-
-
 	var OSUmarker = new google.maps.Marker({
 		position: OSU,
 		map: map,
 		title: 'Oregon State University'
 	});
-
-	var contentString = 
+	var contentString =
 		'<h1 id="firstHeading" class="firstHeading">Oregon State University</h1>'+
 		'<div id="bodyContent">'+
 		'<p><b>Oregon State University, Corvallis, OR</b></br>' +
-                '<img src="http://stat.oregonstate.edu/files/stat7/pic3.jpg" alt="Pic of OSU" height="71" width="106"></br>' + 
+                '<img src="http://stat.oregonstate.edu/files/stat7/pic3.jpg" alt="Pic of OSU" height="71" width="106"></br>' +
 		'Phone Number: (541)737-1000</br> '+
 		'Research-centric public school founded in 1868, with popular engineering &science programs '+
 		'<p>Website:<a href="https://oregonstate.edu">oregonstate.edu</a> '+
 		'</p>'+
 		'</div>'+
 		'</div>';
-
 	var OSUinfowindow = new google.maps.InfoWindow({
 		content: contentString
 	});
-
 	OSUmarker.addListener('click', function() {
 		OSUinfowindow.open(map, OSUmarker);
 	});
-
 	var bounds = new google.maps.LatLngBounds();
-
 	var icons = {
 		recovery: {
 			icon: 'http://maps.google.com/mapfiles/ms/micons/recycle.png'
@@ -70,94 +80,36 @@ function initMap() {
 			icon: 'https://maps.google.com/mapfiles/kml/pal4/icon47.png'
 	       }
 	};
-
 	var infowindow = new google.maps.InfoWindow();
 
+    downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="cardboard"', function(data) {
+      var xml = data.responseXML;
+      //console.log(xml);
+      var markers = xml.documentElement.getElementsByTagName('marker');
+      Array.prototype.forEach.call(markers, function(markerElem) {
+        var id = markerElem.getAttribute('id');
+        var name = markerElem.getAttribute('name');
 
-	var features = [{
-			//Garten
-		position: new google.maps.LatLng(44.9686614,-123.0111407),
-		type: 'recovery',
-		content: '<h1 id="firstHeading" class="firstHeading">Garten</h1>'+
-			  '<div id="bodyContent">'+
-			  '<p><b>Garten’s Recycling Services Division, OR</b></br>' +
-                	  '<img src="https://lh5.googleusercontent.com/p/AF1QipNWryADnDRenGu7ony_-lzo5Ausd7LvvoeKw9sd=w408-h407-k-no" alt="Image of Garten" height="71" width="106"></br>'+
-			  'Phone Number: (503)581-4472</br> '+
-			  'Cardboard is first sent to Garten’s Recycling Services Division where it is manufactured into corrugated boxes.'+
-			  'Garten accepts a variety of recyclable materials including glass, paper, aluminum, plastic, and even offers recycling for electronics.'+
-			  '<p>Website:<a href="http://www.garten.org/services/admin/oregon/C19/">http://www.garten.org/services/admin/oregon/C19/</a> '+
-			  '</p>'+
-			  '</div>'+
-			  '</div>'
-		}, {
-		//Northern Pacific
-		position: new google.maps.LatLng(46.1268461,-122.9801899),
-		type: 'manufacturing',
-		content: '<h1 id="firstHeading" class="firstHeading">Northern Pacific</h1>'+
-			  '<div id="bodyContent">'+
-			  '<p><b>Northern Pacific Paper Company, OR</b></br>' +
-			  '<img src="http://" alt="Insert Image Here" height="71" width="106"></br>'+
-			  'Phone Number: Insert Number Here</br> '+
-			  '<p> info info info '+
-			  '<p>Website:<a href="http://norpacpaper.com">http://norpacpaper.com</a> '+
-			  '</p>'+
-			  '</div>'+
-			  '</div>'
+        var type = markerElem.getAttribute('type');
+        var point = new google.maps.LatLng(
+            parseFloat(markerElem.getAttribute('lat')),
+            parseFloat(markerElem.getAttribute('lng')));
 
-
-		}, {
-		//Port Townsend
-		position: new google.maps.LatLng(48.0954964,-122.7996559),
-		type: 'manufacturing',
-		content: '<h1 id="firstHeading" class="firstHeading">Port Townsend</h1>'+
-			  '<div id="bodyContent">'+
-			  '<p><b>Northern Port Townsend, OR</b></br>' +
-			  '<img src="http://" alt="Insert Image Here" height="71" width="106"></br>'+
-			  'Phone Number: Insert Number Here</br> '+
-			  '<p> info info info '+
-			  '<p>Website:<a href="htt://Insert Link Here">Name of the Link</a> '+
-			  '</p>'+
-			  '</div>'+
-			  '</div>'
-
-		}, {
-		//Georgia-Pacific
-		position: new google.maps.LatLng(44.6146924,-123.9357065),
-		type: 'manufacturing',
-		content:'<h1 id="firstHeading" class="firstHeading">Georgia-Pacific</h1>'+
-			  '<div id="bodyContent">'+
-			  '<p><b>Northern Georgia_Pacific, OR</b></br>' +
-			  '<img src="http://" alt="Insert Image Here" height="71" width="106"></br>'+
-			  'Phone Number: Insert Number Here</br> '+
-			  '<p> info info info '+
-			  '<p>Website:<a href="htt://Insert Link Here">Name of the Link</a> '+
-			  '</p>'+
-			  '</div>'+
-			  '</div>'
-
-		}];
-
-		features.forEach(function(feature) {
-			var marker = new google.maps.Marker({
-				position: feature.position,
-				icon: icons[feature.type].icon,
-				map: map
-			});
-			marker.addListener('click', function(){
-			infowindow.close();
-			infowindow.setContent(feature.content);
-			infowindow.open(map, marker);
-			});
-
-			bounds.extend(feature.position);
-		});
-
-	map.fitBounds(bounds);
-
-}
+        var marker = new google.maps.Marker({
+          map: map,
+          position: point,
+          //label: icon.label
+        });
+        marker.addListener('click', function() {
+           OSUinfowindow.open(map, marker);
+		   OSUinfowindow.setContent("<div>" + id + "</div>");
+	    });
+      });
+    });
+ }
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap">
-    </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap">
+</script>
 </body>
 
 </html>
