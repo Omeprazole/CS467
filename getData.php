@@ -3,7 +3,7 @@
     ini_set('display_errors', 'On');
     include 'sqlInfo.php';
 
-    // Start XML file, create parent node 
+    // Start XML file, create parent node
     $dom = new DOMDocument("1.0");
     $node = $dom->createElement("markers");
     $parnode = $dom->appendChild($node);
@@ -16,12 +16,17 @@
         die("connection error" .$mysqli->connect_errno ."".$mysqli->connect_error);
     }
 
+    //Get type from input
+    $type = $_GET["type"];
+
+    //Fetch data from database
     $query = "SELECT main.id, main.type, main.description, main.image,
                 s1.name, s1.lat, s1.lng, s2.name AS last_name,
                 s2.lat AS last_lat, s2.lng AS last_lng, s1.hyperlink
               FROM main
               LEFT JOIN stops AS s1 ON main.stop_id = s1.id
-              LEFT JOIN stops AS s2 ON main.last_stop_id = s2.id";
+              LEFT JOIN stops AS s2 ON main.last_stop_id = s2.id
+              WHERE type = $type";
 
     header("Content-type: text/xml");
 
