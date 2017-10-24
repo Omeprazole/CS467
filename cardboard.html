@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,26 +46,20 @@ function initMap() {
 		lat: 44.562854,
      		lng: -123.278977
 	};
+
 	var map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 10,
-		center: OSU
+		zoom: 8,
+		center: {lat: 45.512794, lng: -122.679565}
 	});
 	var OSUmarker = new google.maps.Marker({
 		position: OSU,
 		map: map,
 		title: 'Oregon State University'
 	});
-	var contentString =
-		'<h1 id="firstHeading" class="firstHeading">Oregon State University</h1>'+
-		'<div id="bodyContent">'+
-		'<p><b>Oregon State University, Corvallis, OR</b></br>' +
-                '<img src="http://stat.oregonstate.edu/files/stat7/pic3.jpg" alt="Pic of OSU" height="71" width="106"></br>' +
-		'Phone Number: (541)737-1000</br> '+
-		'Research-centric public school founded in 1868, with popular engineering &science programs '+
-		'<p>Website:<a href="https://oregonstate.edu">oregonstate.edu</a> '+
-		'</p>'+
-		'</div>'+
-		'</div>';
+	var contentString = '<div><strong>Oregon State University</strong><br>' + 
+	'Research-centric public school founded in 1868, with popular engineering &science programs <br>' +
+	'Website: www.oregonstate.edu' + '<br></div>';
+
 	var OSUinfowindow = new google.maps.InfoWindow({
 		content: contentString
 	});
@@ -82,30 +77,80 @@ function initMap() {
 	};
 	var infowindow = new google.maps.InfoWindow();
 
-    downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="cardboard"', function(data) {
-      var xml = data.responseXML;
-      //console.log(xml);
-      var markers = xml.documentElement.getElementsByTagName('marker');
-      Array.prototype.forEach.call(markers, function(markerElem) {
-        var id = markerElem.getAttribute('id');
-        var name = markerElem.getAttribute('name');
+	downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="cardboard"', function(data) {
+		var xml = data.responseXML;
+		var coordArray = [];
+       		//console.log(xml);
+      		var markers = xml.documentElement.getElementsByTagName('marker');
+      		Array.prototype.forEach.call(markers, function(markerElem) {
+        		var id = markerElem.getAttribute('id');
+        		var name = markerElem.getAttribute('name');
 
-        var type = markerElem.getAttribute('type');
-        var point = new google.maps.LatLng(
-            parseFloat(markerElem.getAttribute('lat')),
-            parseFloat(markerElem.getAttribute('lng')));
+        		var type = markerElem.getAttribute('type');
+			var hyperlink = markerElem.getAttribute('hyperlink');
+        		var point = new google.maps.LatLng(
+            			parseFloat(markerElem.getAttribute('lat')),
+            			parseFloat(markerElem.getAttribute('lng')));
 
-        var marker = new google.maps.Marker({
-          map: map,
-          position: point,
-          //label: icon.label
-        });
-        marker.addListener('click', function() {
-           OSUinfowindow.open(map, marker);
-		   OSUinfowindow.setContent("<div>" + id + "</div>");
-	    });
-      });
-    });
+			coordArray.push({lat: point.lat(), lng: point.lng()});
+
+        		var marker = new google.maps.Marker({
+          			map: map,
+          			position: point,
+          			//label: icon.label
+        		});
+	
+        		marker.addListener('click', function() {
+	   			infowindow.close();
+           			infowindow.open(map, marker);
+	   			infowindow.setContent('<div><strong>' + name + '</strong><br>' + 
+				'type: ' + type + ' recycling<br>'  + 'Website: <a href="' + hyperlink + '">' + hyperlink + '</a><br></div>');
+	    		});
+      		});
+
+		var lineSymbol = {
+			path: 'M 0,-1 0,1',
+          		strokeOpacity: 1,
+          		scale: 4
+        	};
+		poly = new google.maps.Polyline({
+			strokeColor: '#778899',
+			strokeOpacity: 0,
+          		icons: [{
+           			icon: lineSymbol,
+            			offset: '0',
+            			repeat: '20px'
+          		}],
+			map: map,
+        	});
+
+		map.addListener('click', addTrack);
+
+		var i = 1;
+		var path = [OSUmarker.getPosition(), coordArray[0]];
+		function addTrack(event){
+			poly.setPath(path);
+			if(path.length > 2)
+				path.pop();		
+			path.push(coordArray[i]);
+			if(i < coordArray.length)
+				i++;
+		}
+		
+		poly.setMap(map);
+
+	/*
+		var i = 1;
+		var path = [OSUmarker.getPosition(), coordArray[0]];
+		function addTrack(event){
+			poly.setPath(path); 
+			path.push(coordArray[i]);
+			poly.setMap(map);
+			if(i < coordArray.length)
+				i++;
+		}
+	*/	
+    	});
  }
     </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap">
