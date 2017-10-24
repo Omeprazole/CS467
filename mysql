@@ -1,3 +1,12 @@
+-- phpMyAdmin SQL Dump
+-- version 2.11.9.4
+-- http://www.phpmyadmin.net
+--
+-- Host: oniddb
+-- Generation Time: Oct 24, 2017 at 01:30 PM
+-- Server version: 5.5.55
+-- PHP Version: 5.2.6-1+lenny16
+
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
@@ -26,14 +35,14 @@ CREATE TABLE IF NOT EXISTS `main` (
 
 INSERT INTO `main` (`id`, `stop_id`, `type`, `last_stop_id`, `description`, `image`) VALUES
 (1, 2, 'cardboard', 1, 'Cardboard is first sent to Garten’s Recycling Services Division where it is manufactured into corrugated boxes. Garten accepts a variety of recyclable materials including glass, paper, aluminum, plastic, and even offers recycling for electronics.', NULL),
-(2, 3, 'cardboard', 2, 'One of three stop of cardboard boxes to help produce and package copy paper and printing/publishing stock, which is then sent to warehouses in MO, IL, and PA', NULL),
-(3, 4, 'cardboard', 2, 'One of three stops of cardboard boxes to help produce kraft pulp, paper, containerboard, and specialty products', NULL),
-(4, 5, 'cardboard', 2, 'One of three stops of cardboards boxes to help produce containerboard for packaging purposes', NULL),
+(2, 3, 'cardboard', 2, 'One of three stop of cardboard boxes to help produce and package copy paper and printing/publishing stock, which is then sent to warehouses in MO, IL, and PA', 'http://web.engr.oregonstate.edu/~niguang/images/image4.png'),
+(3, 4, 'cardboard', 2, 'One of three stops of cardboard boxes to help produce kraft pulp, paper, containerboard, and specialty products', 'http://web.engr.oregonstate.edu/~niguang/images/image7.png'),
+(4, 5, 'cardboard', 2, 'One of three stops of cardboards boxes to help produce containerboard for packaging purposes', 'http://web.engr.oregonstate.edu/~niguang/images/image6.png'),
 (5, 2, 'paper', 1, 'Mixed paper waste is sent to Garten where it is separated into ONP (i.e., newspaper) and SOP (i.e., office paper) streams', NULL),
-(6, 6, 'paper', 2, 'ONP and SOP streams sent to Michelsen to help produce molded pulp “purple apple tray” product for packaging fruits', NULL),
+(6, 6, 'paper', 2, 'ONP and SOP streams sent to Michelsen to help produce molded pulp “purple apple tray” product for packaging fruits', 'http://web.engr.oregonstate.edu/~niguang/images/image3.png'),
 (7, 7, 'paper', 2, 'shipped directly to Pioneer Recycling', NULL),
 (8, 8, 'paper', 7, '', NULL),
-(9, 3, 'paper', 2, 'ONP and SOP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World', NULL),
+(9, 14, 'paper', 2, 'ONP and SOP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World', 'http://web.engr.oregonstate.edu/~niguang/images/image2.png'),
 (10, 11, 'aluminum cans', 1, NULL, NULL),
 (11, 7, 'aluminum cans', 1, 'shipped directly to Pioneer Recycling', NULL),
 (12, 8, 'aluminum cans', 7, NULL, NULL),
@@ -49,27 +58,57 @@ INSERT INTO `main` (`id`, `stop_id`, `type`, `last_stop_id`, `description`, `ima
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `markers`
+--
+
+CREATE TABLE IF NOT EXISTS `markers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) NOT NULL,
+  `address` varchar(80) NOT NULL,
+  `lat` float(10,6) NOT NULL,
+  `lng` float(10,6) NOT NULL,
+  `type` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `markers`
+--
+
+INSERT INTO `markers` (`id`, `name`, `address`, `lat`, `lng`, `type`) VALUES
+(1, 'Love.Fish', '580 Darling Street, Rozelle, NSW', -33.861034, 151.171936, 'restaurant'),
+(2, 'Young Henrys', '76 Wilford Street, Newtown, NSW', -33.898113, 151.174469, 'bar'),
+(3, 'Hunter Gatherer', 'Greenwood Plaza, 36 Blue St, North Sydney NSW', -33.840282, 151.207474, 'bar'),
+(4, 'The Potting Shed', '7A, 2 Huntley Street, Alexandria, NSW', -33.910751, 151.194168, 'bar'),
+(5, 'Nomad', '16 Foster Street, Surry Hills, NSW', -33.879917, 151.210449, 'bar'),
+(6, 'Three Blue Ducks', '43 Macpherson Street, Bronte, NSW', -33.906357, 151.263763, 'restaurant'),
+(7, 'Single Origin Roasters', '60-64 Reservoir Street, Surry Hills, NSW', -33.881123, 151.209656, 'restaurant'),
+(8, 'Red Lantern', '60 Riley Street, Darlinghurst, NSW', -33.874737, 151.215530, 'restaurant');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stops`
 --
 
 CREATE TABLE IF NOT EXISTS `stops` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `lat` float NOT NULL,
-  `log` float NOT NULL,
+  `lng` float NOT NULL,
   `name` varchar(64) NOT NULL,
   `hyperlink` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `stops`
 --
 
-INSERT INTO `stops` (`id`, `lat`, `log`, `name`, `hyperlink`) VALUES
+INSERT INTO `stops` (`id`, `lat`, `lng`, `name`, `hyperlink`) VALUES
 (1, 44.5629, -123.279, 'Oregon State University Campus', NULL),
 (2, 44.9687, -123.011, 'Garten', 'http://www.garten.org/services/admin/oregon/C19/'),
-(3, 46.1268, -122.98, 'Northern Pacific Paper Company', 'http://norpacpaper.com/'),
-(4, 48.0955, -122.8, 'Port Townsend Paper Company', NULL),
+(3, 46.1045, -122.917, 'Kapstone', 'http://www.kapstonepaper.com/location/longview-wa/ '),
+(4, 48.0955, -122.8, 'Port Townsend Paper Company', 'http://www.ptpc.com/'),
 (5, 44.6147, -123.936, 'Georgia-Pacific Corporation', 'https://www.gp.com/'),
 (6, 46.6041, -120.515, 'Michelsen Packaging Co', 'http://michelsenpackaging.com/'),
 (7, 44.5923, -123.252, 'Republic Services', 'http://local.republicservices.com/site/Corvallis-OR'),
@@ -78,4 +117,6 @@ INSERT INTO `stops` (`id`, `lat`, `log`, `name`, `hyperlink`) VALUES
 (10, 45.7978, -122.996, 'Owens-Illinois glass manufacturing plant', 'http://www.packaging-gateway.com/projects/glass-to-glass-recycling-facility-portland-oregon/'),
 (11, 45.5486, -122.723, 'OBRC', 'https://www.obrc.com/ '),
 (12, 45.8349, -122.829, 'ORPET', 'https://www.obrc.com/Partners/ORPET'),
-(13, 44.7003, -123.198, 'Pacific Region Compost', NULL);
+(13, 44.7003, -123.198, 'Pacific Region Compost', NULL),
+(14, 46.1268, -122.98, 'Northern Pacific Paper Company', 'http://norpacpaper.com/ ');
+
