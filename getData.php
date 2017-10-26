@@ -20,12 +20,11 @@
     $type = $_GET["type"];
 
     //Fetch data from database
-    $query = "SELECT main.id, main.type, main.description, main.image,
-                s1.name, s1.lat, s1.lng, s2.name AS last_name,
-                s2.lat AS last_lat, s2.lng AS last_lng, s1.hyperlink
+    $query = "SELECT main.id, main.type, s1.name, s1.lat, s1.lng, s2.name AS last_name, s2.lat AS last_lat, s2.lng AS last_lng, s1.hyperlink, images.image, images.source AS image_source, main.description
               FROM main
               LEFT JOIN stops AS s1 ON main.stop_id = s1.id
               LEFT JOIN stops AS s2 ON main.last_stop_id = s2.id
+              LEFT JOIN images ON main.image_id = images.id
               WHERE type = $type";
 
     header("Content-type: text/xml");
@@ -47,6 +46,7 @@
               $newnode->setAttribute("hyperlink", $row['hyperlink']);
               $newnode->setAttribute("description", utf8_encode($row['description']));
               $newnode->setAttribute("image", $row['image']);
+              $newnode->setAttribute("image_source", $row['image_source']);
            }
 
         } else {
