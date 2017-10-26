@@ -62,8 +62,8 @@ function initMap() {
 
 	//Define the symbol of line
 	var lineSymbol = {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 8,
+      path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+      scale: 3,
       strokeColor: '#393'
     };
 
@@ -96,15 +96,17 @@ function initMap() {
             parseFloat(markerElem.getAttribute('last_lng')));
         var label = name.charAt(0);
 
-        //Set the line
+       //Set the line
         var line = new google.maps.Polyline({
-          path: [lastPoint, point],
-          icons: [{
-            icon: lineSymbol,
-            offset: '100%'
-          }],
+            path: [lastPoint, point],
+            strokeColor: '#778899',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            icons: [{
+             icon: lineSymbol,
+             offset: '100%'
+            }],
           map: map
-
         });
 
         //Set the animated symbol
