@@ -21,21 +21,26 @@ padding: 0;
 
 <body>
 <div id="map"></div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
 <script>
-function downloadUrl(url,callback) {
- var request = window.ActiveXObject ?
-     new ActiveXObject('Microsoft.XMLHTTP') :
-     new XMLHttpRequest;
- request.onreadystatechange = function() {
-   if (request.readyState == 4) {
-     //request.onreadystatechange = doNothing;
-     callback(request, request.status);
-   }
- };
- request.open('GET', url, true);
- request.send(null);
-}
+    //Define the function of dumping the xml file
+    function downloadUrl(url,callback) {
+     var request = window.ActiveXObject ?
+         new ActiveXObject('Microsoft.XMLHTTP') :
+         new XMLHttpRequest;
+     request.onreadystatechange = function() {
+       if (request.readyState == 4) {
+         //request.onreadystatechange = doNothing;
+         callback(request, request.status);
+       }
+     };
+     request.open('GET', url, true);
+     request.send(null);
+    }
+
+//Set up the map
 function initMap() {
+    //Set up the marker of OSU campus
 	var OSU = {
 		lat: 44.562854,
      		lng: -123.278977
@@ -44,12 +49,16 @@ function initMap() {
 		zoom: 8,
 		center: {lat: 45.512794, lng: -122.679565}
 	});
+	var OSUimage = 'http://maps.google.com/mapfiles/ms/micons/recycle.png';
 	var OSUmarker = new google.maps.Marker({
 		position: OSU,
+		icon: OSUimage,
 		map: map,
 		title: 'Oregon State University'
 	});
-	var contentString = '<div><strong>Oregon State University</strong><br>' +
+
+	//I don't think the info window for OSU is necessary, Correct me if I am wrong. -Guangting
+	/* var contentString = '<div><strong>Oregon State University</strong><br>' +
 	'Research-centric public school founded in 1868, with popular engineering &science programs <br>' +
 	'Website: www.oregonstate.edu' + '<br></div>';
 	var OSUinfowindow = new google.maps.InfoWindow({
@@ -57,48 +66,55 @@ function initMap() {
 	});
 	OSUmarker.addListener('click', function() {
 		OSUinfowindow.open(map, OSUmarker);
-	});
-	var bounds = new google.maps.LatLngBounds();
-	var icons = {
+	}); */
+
+	//var bounds = new google.maps.LatLngBounds();
+
+	/*var icons = {
 		recovery: {
 			icon: 'http://maps.google.com/mapfiles/ms/micons/recycle.png'
 	  	},
 		manufacturing: {
 			icon: 'https://maps.google.com/mapfiles/kml/pal4/icon47.png'
 	       }
-	};
+	}; */
 	var infowindow = new google.maps.InfoWindow();
+
+	//Call the function of dumping the XML file
 	downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="cardboard"', function(data) {
 		var xml = data.responseXML;
-		var coordArray = [];
+		//var coordArray = [];
        		//console.log(xml);
-      		var markers = xml.documentElement.getElementsByTagName('marker');
-      		Array.prototype.forEach.call(markers, function(markerElem) {
-        		var id = markerElem.getAttribute('id');
-        		var name = markerElem.getAttribute('name');
-        		var type = markerElem.getAttribute('type');
-			    var hyperlink = markerElem.getAttribute('hyperlink');
-			    var image = markerElem.getAttribute('image');
-        		var point = new google.maps.LatLng(
-            			parseFloat(markerElem.getAttribute('lat')),
-            			parseFloat(markerElem.getAttribute('lng')));
-			coordArray.push({lat: point.lat(), lng: point.lng()});
-        		var marker = new google.maps.Marker({
-          			map: map,
-          			position: point,
-          			//label: icon.label
-        		});
 
-        		marker.addListener('click', function() {
-	   			infowindow.close();
-           		infowindow.open(map, marker);
-	   			infowindow.setContent('<div><strong>' + name + '</strong><br>' +
+      	var markers = xml.documentElement.getElementsByTagName('marker');
+      	Array.prototype.forEach.call(markers, function(markerElem) {
+        var id = markerElem.getAttribute('id');
+        var name = markerElem.getAttribute('name');
+        var type = markerElem.getAttribute('type');
+	    var hyperlink = markerElem.getAttribute('hyperlink');
+		var image = markerElem.getAttribute('image');
+        var point = new google.maps.LatLng(
+            parseFloat(markerElem.getAttribute('lat')),
+            parseFloat(markerElem.getAttribute('lng')));
+        var label = name.charAt(0);
+		//coordArray.push({lat: point.lat(), lng: point.lng()});
+        var marker = new google.maps.Marker({
+          	map: map,
+          	position: point,
+          	label: label
+        });
+
+        marker.addListener('click', function() {
+	   		infowindow.close();
+           	infowindow.open(map, marker);
+	   		infowindow.setContent('<div><strong>' + name + '</strong><br>' +
 				'type: ' + type + ' recycling<br>'
 				+ 'Image: <img src="' + image + '"' + image + 'alt="Insert Image Here" height="71" width="106"></br>'
 				+ 'Website: <a href="' + hyperlink + '">' + hyperlink + '</a><br></div>');
-	    		});
-      		});
-		var lineSymbol = {
+	    	});
+      	});
+
+		/* var lineSymbol = {
 			path: 'M 0,-1 0,1',
           		strokeOpacity: 1,
           		scale: 4
@@ -126,22 +142,12 @@ function initMap() {
 		}
 
 		poly.setMap(map);
-	/*
-		var i = 1;
-		var path = [OSUmarker.getPosition(), coordArray[0]];
-		function addTrack(event){
-			poly.setPath(path);
-			path.push(coordArray[i]);
-			poly.setMap(map);
-			if(i < coordArray.length)
-				i++;
-		}
-	*/
-    	});
+		*/
+
+    });
  }
     </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap">
-</script>
+
 </body>
 
 </html>
