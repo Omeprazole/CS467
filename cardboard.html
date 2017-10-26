@@ -57,35 +57,30 @@ function initMap() {
 		title: 'Oregon State University'
 	});
 
-	//I don't think the info window for OSU is necessary, Correct me if I am wrong. -Guangting
-	/* var contentString = '<div><strong>Oregon State University</strong><br>' +
-	'Research-centric public school founded in 1868, with popular engineering &science programs <br>' +
-	'Website: www.oregonstate.edu' + '<br></div>';
-	var OSUinfowindow = new google.maps.InfoWindow({
-		content: contentString
-	});
-	OSUmarker.addListener('click', function() {
-		OSUinfowindow.open(map, OSUmarker);
-	}); */
-
-	//var bounds = new google.maps.LatLngBounds();
-
-	/*var icons = {
-		recovery: {
-			icon: 'http://maps.google.com/mapfiles/ms/micons/recycle.png'
-	  	},
-		manufacturing: {
-			icon: 'https://maps.google.com/mapfiles/kml/pal4/icon47.png'
-	       }
-	}; */
+    //Define info window
 	var infowindow = new google.maps.InfoWindow();
+
+	//Define the symbol of line
+	var lineSymbol = {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 8,
+      strokeColor: '#393'
+    };
+
+    //Define the function for the animated symbol
+    function animateCircle(line) {
+       var count = 0;
+       window.setInterval(function() {
+          count = (count + 1) % 200;
+          var icons = line.get('icons');
+          icons[0].offset = (count / 2) + '%';
+          line.set('icons', icons);
+       }, 20);
+    }
 
 	//Call the function of dumping the XML file
 	downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="cardboard"', function(data) {
 		var xml = data.responseXML;
-		//var coordArray = [];
-       		//console.log(xml);
-
       	var markers = xml.documentElement.getElementsByTagName('marker');
       	Array.prototype.forEach.call(markers, function(markerElem) {
         var id = markerElem.getAttribute('id');
@@ -96,56 +91,46 @@ function initMap() {
         var point = new google.maps.LatLng(
             parseFloat(markerElem.getAttribute('lat')),
             parseFloat(markerElem.getAttribute('lng')));
+        var lastPoint = new google.maps.LatLng(
+            parseFloat(markerElem.getAttribute('last_lat')),
+            parseFloat(markerElem.getAttribute('last_lng')));
         var label = name.charAt(0);
-		//coordArray.push({lat: point.lat(), lng: point.lng()});
+
+        //Set the line
+        var line = new google.maps.Polyline({
+          path: [lastPoint, point],
+          icons: [{
+            icon: lineSymbol,
+            offset: '100%'
+          }],
+          map: map
+
+        });
+
+        //Set the animated symbol
+        animateCircle(line);
+
+		//Set the marker
         var marker = new google.maps.Marker({
           	map: map,
           	position: point,
           	label: label
         });
 
-        marker.addListener('click', function() {
+        //Set the info window
+        marker.addListener('mouseover', function() {
 	   		infowindow.close();
            	infowindow.open(map, marker);
 	   		infowindow.setContent('<div><strong>' + name + '</strong><br>' +
 				'type: ' + type + ' recycling<br>'
 				+ 'Image: <img src="' + image + '"' + image + 'alt="Insert Image Here" height="71" width="106"></br>'
 				+ 'Website: <a href="' + hyperlink + '">' + hyperlink + '</a><br></div>');
-	    	});
-      	});
 
-		/* var lineSymbol = {
-			path: 'M 0,-1 0,1',
-          		strokeOpacity: 1,
-          		scale: 4
-        	};
-		poly = new google.maps.Polyline({
-			strokeColor: '#778899',
-			strokeOpacity: 0,
-          		icons: [{
-           			icon: lineSymbol,
-            			offset: '0',
-            			repeat: '20px'
-          		}],
-			map: map,
-        	});
-		map.addListener('click', addTrack);
-		var i = 1;
-		var path = [OSUmarker.getPosition(), coordArray[0]];
-		function addTrack(event){
-			poly.setPath(path);
-			if(path.length > 2)
-				path.pop();
-			path.push(coordArray[i]);
-			if(i < coordArray.length)
-				i++;
-		}
-
-		poly.setMap(map);
-		*/
-
-    });
- }
+	    }
+	);
+});
+});
+}
     </script>
 
 </body>
