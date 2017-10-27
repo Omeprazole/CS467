@@ -1,17 +1,17 @@
 <h3>OSU Campus Recycling Maps</h3>
 <p>Recycling is sorted into the following categories. Click to track where each goes and what it does. </p>
-<p><img src="http://web.engr.oregonstate.edu/~niguang/images/paper.png" width="150" height="150" alt="Track for Paper" title="Track for Paper" onclick="load_paper()">
+<p><img src="http://web.engr.oregonstate.edu/~niguang/images/paper.png" width="150" height="150" alt="Track for Paper" title="Track for Paper" onclick="load_paper()">   
      <img src="http://web.engr.oregonstate.edu/~niguang/images/cardboard.png" width="150" height="150" alt="Track for Cardboard" title="Track for Cardboard" onclick="load_cardboard()">
     <img src="http://web.engr.oregonstate.edu/~niguang/images/glass.png" width="150" height="150" alt="Track for Glass" title="Track for Glass" onclick="load_glass()">
     <img src="img/cans.png" width="150" height="150" alt="Track for Aluminum Cans" title="Track for Aluminum Cans" onclick="load_cans()">
     <img src="img/plastic.png" width="150" height="150" alt="Track for Plastic" title="Track for Plastic" onclick="load_plastic()">
     <img src="img/compost.png" width="150" height="150" alt="Track for Compost" title="Track for Compost" onclick="load_compost()">
     <img src="img/landfill.png" width="150" height="150" alt="Track for Landfill Waste" title="Track for Landfill Waste" onclick="load_landfill()"></p>
-<p><iframe id="recycling_map" frameborder="0" scrolling="no" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/default_map.html" width="100%" height="500"></iframe></p>
+<p><iframe id="recycling_map" frameborder="0" scrolling="no" width="100%" height="600" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/default_map.html" marginheight="0" marginwidth="0" ></iframe></p>
 
 <script>
 function load_cardboard(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~leame/Interactive_Map/cardboard.html"
+	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~niguang/cardboard.html"
 };
 
 function load_paper(){
