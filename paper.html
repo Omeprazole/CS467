@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -113,16 +114,9 @@
                 scale: 3,
                 strokeColor: '#393'
             };
-            //Define the function for the animated symbol
-            function animateCircle(line) {
-                var count = 0;
-                window.setInterval(function() {
-                    count = (count + 1) % 200;
-                    var icons = line.get('icons');
-                    icons[0].offset = (count / 2) + '%';
-                    line.set('icons', icons);
-                }, 20);
-            }
+
+
+
             //Call the function of dumping the XML file
             downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="paper"', function(data) {
                 var xml = data.responseXML;
@@ -141,10 +135,11 @@
                         parseFloat(markerElem.getAttribute('last_lng')));
                     var label = name.charAt(0);
                     var desc = markerElem.getAttribute('description');
+                    var subtype = markerElem.getAttribute('subtype');
                     //Set the line
                     var line = new google.maps.Polyline({
                         path: [lastPoint, point],
-                        strokeColor: '#778899',
+                        //strokeColor: '#778899',
                         strokeOpacity: 1.0,
                         strokeWeight: 2,
                         icons: [{
@@ -155,6 +150,8 @@
                     });
                     //Set the animated symbol
                     animateCircle(line);
+
+                    setLineColor(line, subtype);
                     //Set the marker
                     var marker = new google.maps.Marker({
                         map: map,
@@ -197,9 +194,31 @@
                     });
                 });
             });
+            //Define the function for the animated symbol
+            function animateCircle(line) {
+                var count = 0;
+                window.setInterval(function() {
+                    count = (count + 1) % 200;
+                    var icons = line.get('icons');
+                    icons[0].offset = (count / 2) + '%';
+                    line.set('icons', icons);
+                }, 20);
+            }
+
+            function setLineColor(line, subtype) {
+                 if(subtype == "") {
+                    line.setOptions({strokeColor: '#778899'});
+                 } else if(subtype == "SOP"){
+                    line.setOptions({strokeColor: 'blue'});
+                 } else if(subtype == "ONP") {
+                    line.setOptions({strokeColor: 'red'});
+                 } else if(subtype == "ONP&SOP") {
+                    line.setOptions({strokeColor: 'green'});
+                 }
+            }
         }
     </script>
 </div>
 </body>
 
-</html>>
+</html>
