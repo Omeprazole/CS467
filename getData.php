@@ -15,8 +15,8 @@
     //Get type from input
     $type = $_GET["type"];
     //Fetch data from database
-    $query = "SELECT main.id, main.type, s1.name, s1.lat, s1.lng, s2.name AS last_name, s2.lat AS last_lat, 
-                s2.lng AS last_lng, s1.hyperlink, images.image, images.source AS image_source, 
+    $query = "SELECT main.id, main.type, s1.name, s1.lat, s1.lng, s2.name AS last_name, s2.lat AS last_lat,
+                s2.lng AS last_lng, s1.hyperlink, images.image, images.source AS image_source,
                 main.description, main.subtype
               FROM main
               LEFT JOIN stops AS s1 ON main.stop_id = s1.id
@@ -32,6 +32,7 @@
               $newnode = $parnode->appendChild($node);
               $newnode->setAttribute("id",$row['id']);
               $newnode->setAttribute("type",$row['type']);
+              $newnode->setAttribute("subtype",$row['subtype']);
               $newnode->setAttribute("name", $row['name']);
               $newnode->setAttribute("lat", $row['lat']);
               $newnode->setAttribute("lng", $row['lng']);
