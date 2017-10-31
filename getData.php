@@ -2,33 +2,28 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 'On');
     include 'sqlInfo.php';
-
     // Start XML file, create parent node
     $dom = new DOMDocument("1.0");
     $node = $dom->createElement("markers");
     $parnode = $dom->appendChild($node);
-
     //connect to database
     $mysqli = new mysqli($dbhost, $dbname, $dbpass, $dbuser);
-
     //check connection
     if(!$mysqli || $mysqli->connect_errno) {
         die("connection error" .$mysqli->connect_errno ."".$mysqli->connect_error);
     }
-
     //Get type from input
     $type = $_GET["type"];
-
     //Fetch data from database
-    $query = "SELECT main.id, main.type, s1.name, s1.lat, s1.lng, s2.name AS last_name, s2.lat AS last_lat, s2.lng AS last_lng, s1.hyperlink, images.image, images.source AS image_source, main.description
+    $query = "SELECT main.id, main.type, s1.name, s1.lat, s1.lng, s2.name AS last_name, s2.lat AS last_lat, 
+                s2.lng AS last_lng, s1.hyperlink, images.image, images.source AS image_source, 
+                main.description, main.subtype
               FROM main
               LEFT JOIN stops AS s1 ON main.stop_id = s1.id
               LEFT JOIN stops AS s2 ON main.last_stop_id = s2.id
               LEFT JOIN images ON main.image_id = images.id
               WHERE type = $type";
-
     header("Content-type: text/xml");
-
     if ($result = $mysqli->query($query)) {
         //output data of each row
        if ($result->num_rows > 0) {
@@ -48,7 +43,6 @@
               $newnode->setAttribute("image", $row['image']);
               $newnode->setAttribute("image_source", $row['image_source']);
            }
-
         } else {
             echo "0 results";
         }
@@ -56,6 +50,5 @@
     } else {
       die("fetch data fail");
     }
-
     echo $dom->saveXML();
 ?>
