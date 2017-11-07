@@ -5,25 +5,21 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Paper Map</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <style>
         /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
-
         #map {
             height: 100%;
         }
-
         /* Optional: Makes the sample page fill the window. */
-
         html,
         body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
-
         /*InfoWindow*/
-
         .iw-container {
             font-family: 'Gudea', Arial, Helvetica, Verdana, sans-serif;
             top: 15px !important;
@@ -39,16 +35,12 @@
             margin: 0 -10px 10px -10px;
             border-bottom: 10px solid black;
         }
-
         /*Company name*/
-
         .iw-container .company-name {
             color: white;
             font-size: 20px;
         }
-
         /*recycling type*/
-
         .iw-container .recyling-type {
             color: black;
             font-weight: bold;
@@ -56,15 +48,11 @@
             text-transform: capitalize;
             margin-bottom: -10px;
         }
-
         /*link*/
-
         .iw-container a {
             font-size: 14px;
         }
-
         /*infowindow images*/
-
         .iw-container img {
             display: block;
             margin: auto;
@@ -74,18 +62,22 @@
         }
 
         /*moves gm-style-iw to make up for removing the background*/
-
         .gm-style-iw {
             top: 20px !important;
+        }
+
+        .description {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 20px;
         }
     </style>
 </head>
 
 <body>
-    <div id="map">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
-        <script>
+<div id="map">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
+    <script>
             //Define the function of dumping the xml file
             function downloadUrl(url, callback) {
                 var request = window.ActiveXObject ?
@@ -130,9 +122,6 @@
                     scale: 3,
                     strokeColor: '#393'
                 };
-
-
-
                 //Call the function of dumping the XML file
                 downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="paper"', function(data) {
                     var xml = data.responseXML;
@@ -152,6 +141,7 @@
                         var label = name.charAt(0);
                         var desc = markerElem.getAttribute('description');
                         var subtype = markerElem.getAttribute('subtype');
+                        var img_source = markerElem.getAttribute('image_source');
                         //Set the line
                         var line = new google.maps.Polyline({
                             path: [lastPoint, point],
@@ -166,7 +156,6 @@
                         });
                         //Set the animated symbol
                         animateCircle(line);
-
                         setLineColor(line, subtype);
                         //Set the marker
                         var marker = new google.maps.Marker({
@@ -177,12 +166,18 @@
                         //Set the info window
                         marker.addListener('mouseover', function() {
                             infowindow.close();
-                            infowindow.setContent('<div class="iw-container"><div class="iw-header"><strong><div class="company-name">' + name + '</div></strong>' +
-                                '<div class="recyling-type">' + type + ' recycling</div><br>' +
-                                '<a href="' + hyperlink + '">' + hyperlink + '</a></div>' +
-                                '<img src="' + image + '"' + image + 'alt="Insert Image Here"></br>' +
-                                desc + '<br><br>' +
-                                '<img src="img/end.png" alt="Placeholder for end materials"></div>');
+                            infowindow.setContent('<div class="iw-container">'
+                                + '<div class="iw-header"><strong><div class="company-name">'
+                                + name + '</div></strong>'
+                                + '<div class="recyling-type">' + type + ' recycling</div><br>'
+                                + '<a href="' + hyperlink + '">' + hyperlink + '</a></div>'
+                                + '<a href="' + img_source + '" target="_blank">'
+                                + '<img src="' + image + '"' + image
+                                + 'alt="Insert Image Here"></a>'
+                                + '<p >(Image source: '
+                                + '<a href="' + img_source + '">' + img_source
+                                + '</a>)</p><p class="description">' + desc + '</p>'
+                                + '<img src="img/end.png" alt="Placeholder for end materials"></div>');
                             //style infowindow
                             google.maps.event.addListenerOnce(infowindow, 'domready', function() {
                                 //default parent container of iw-container
@@ -220,7 +215,6 @@
                         line.set('icons', icons);
                     }, 20);
                 }
-
                 function setLineColor(line, subtype) {
                     if (subtype == "") {
                         line.setOptions({
@@ -242,7 +236,7 @@
                 }
             }
         </script>
-    </div>
+</div>
 </body>
 
 </html>
