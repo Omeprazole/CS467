@@ -27,7 +27,6 @@
             padding: 0 10px 10px 10px;
             border: 1px solid black;
         }
-
         .iw-header {
             background-color: #DC4405;
             padding: 10px 10px 5px 10px;
@@ -60,12 +59,10 @@
             width: auto;
             max-height: 200px;
         }
-
         /*moves gm-style-iw to make up for removing the background*/
         .gm-style-iw {
             top: 20px !important;
         }
-
         .description {
             font-family: 'Source Sans Pro', sans-serif;
             font-size: 20px;
@@ -170,12 +167,12 @@
                                 + '<div class="iw-header"><strong><div class="company-name">'
                                 + name + '</div></strong>'
                                 + '<div class="recyling-type">' + type + ' recycling</div><br>'
-                                + '<a href="' + hyperlink + '">' + hyperlink + '</a></div>'
+                                + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '</a></div>'
                                 + '<a href="' + img_source + '" target="_blank">'
                                 + '<img src="' + image + '"' + image
                                 + 'alt="Insert Image Here"></a>'
                                 + '<p >(Image source: '
-                                + '<a href="' + img_source + '">' + img_source
+                                + '<a href="' + img_source + '" target="_blank">' + img_source
                                 + '</a>)</p><p class="description">' + desc + '</p>'
                                 + '<img src="img/end.png" alt="Placeholder for end materials"></div>');
                             //style infowindow
