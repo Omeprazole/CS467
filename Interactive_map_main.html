@@ -1,40 +1,60 @@
+<p>
 <h3>OSU Campus Recycling Maps</h3>
 <p>Recycling is sorted into the following categories. Click to track where each goes and what it does. </p>
-<p><img src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-paper.png" width="150" height="150" alt="Track for Paper" title="Track for Paper" onclick="load_paper()">
-     <img src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-cardboard.png" width="150" height="150" alt="Track for Cardboard" title="Track for Cardboard" onclick="load_cardboard()" hspace="20">
-    <img src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-glass.png" width="150" height="150" alt="Track for Glass" title="Track for Glass" onclick="load_glass()">
-    <img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/cans.png" width="150" height="150" alt="Track for Aluminum Cans" title="Track for Aluminum Cans" onclick="load_cans()" hspace="20">
-    <img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/plastic.png" width="150" height="150" alt="Track for Plastic" title="Track for Plastic" onclick="load_plastic()">
-    <img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/compost.png" width="150" height="150" alt="Track for Compost" title="Track for Compost" onclick="load_compost()" hspace="20">
-    <img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/landfill.png" width="150" height="150" alt="Track for Landfill Waste" title="Track for Landfill Waste" onclick="load_landfill()"></p>
+
+  <p>
+
+        <img id="paper" style="padding:20px" src="http://web.engr.oregonstate.edu/~niguang/images/paper.png" alt="Track for Paper" width: "200" height: "200"  title="Track for Paper">
+
+
+        <img  id="cardboard" style="padding:20px" src="http://web.engr.oregonstate.edu/~niguang/images/cardboard.png"  alt="Track for Cardboard" width: "200" height: "200" title="Track for Cardboard" >
+
+        <img id="glass"  style="padding:20px" src="http://web.engr.oregonstate.edu/~niguang/images/glass.png" alt="Track for Glass" width: "200" height: "200" title="Track for Glass" >
+
+        <img  id="cans"  style="padding:20px" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/cans.png"  alt="Track for Aluminum Cans" title="Track for Aluminum Cans" >
+
+            <img  id="plastic" style="padding:20px" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/plastic.png"  alt="Track for Plastic" title="Track for Plastic" >
+
+            <img id="Compost"  style="padding:20px"  src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/compost.png" alt="Track for Compost" title="Track for Compost" >
+
+        <img id="landfill"  style="padding:20px"  src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/landfill.png" alt="Track for Landfill Waste" title="Track for Landfill Waste" >
+</p>
 <p><iframe id="recycling_map" frameborder="0" scrolling="no" width="100%" height="600" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/default_map.html" marginheight="0" marginwidth="0" allowfullscreen ></iframe></p>
 
 <script>
-function load_cardboard(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~niguang/cardboard.html"
-};
 
-function load_paper(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~niguang/paper.html"
-};
+$("#paper").click(function () {
+    $("#recycling_map").attr("src", "http://web.engr.oregonstate.edu/~niguang/paper.html");
+    $(this).animate({
+        width: "250",
+        height: "250"
+    }, 'slow');
+    $("img").not("#paper").animate({
+        width: "200",
+        height: "200"
+    }, 'slow');
+});
 
-function load_cans(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~lieny/Interactive_Map/can.html"
-};
+$("#cardboard").click(function () {
+    $("#recycling_map").attr("src", "http://web.engr.oregonstate.edu/~niguang/cardboard.html");
+    $(this).animate({
+        width: "250",
+        height: "250"
+    }, 'slow');
+    $("img").not("#cardboard").animate({
+        width: "200",
+        height: "200"
+    }, 'slow');
+});
 
-function load_plastic(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~lieny/Interactive_Map/plastic.html"
-};
-
-function load_glass(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~lieny/Interactive_Map/glass.html"
-};
-
-function load_compost(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~lieny/Interactive_Map/compost.html"
-};
-
-function load_landfill(){
-	document.getElementById("recycling_map").src = "http://web.engr.oregonstate.edu/~leame/Interactive_Map/glass.html"
-};
-</script>
+$("#glass").click(function () {
+    $("#recycling_map").attr("src", "http://web.engr.oregonstate.edu/~niguang/glass.html");
+    $(this).animate({
+        width: "250",
+        height: "250"
+    }, 'slow');
+    $("img").not("#glass").animate({
+        width: "200",
+        height: "200"
+    }, 'slow');
+});
