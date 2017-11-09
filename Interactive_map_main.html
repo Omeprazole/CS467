@@ -21,12 +21,12 @@ $.fn.getMap=(function(theUrl){
     return $(this).click(function () {
         $("#recycling_map").attr("src", theUrl);
         $(this).animate({
-            width: "250",
-            height: "250"
-        }, 'slow');
-        $(".expand").not(this).animate({
             width: "200",
             height: "200"
+        }, 'slow');
+        $(".expand").not(this).animate({
+            width: "150",
+            height: "150"
         }, 'slow');
     });
 });
