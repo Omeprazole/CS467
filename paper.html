@@ -113,12 +113,14 @@
                 });
                 //Define info window
                 var infowindow = new google.maps.InfoWindow();
+
                 //Define the symbol of line
                 var lineSymbol = {
                     path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                     scale: 3,
-                    strokeColor: '#393'
+                    //strokeColor: '#393'
                 };
+
                 //Call the function of dumping the XML file
                 downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="paper"', function(data) {
                     var xml = data.responseXML;
@@ -215,19 +217,19 @@
                 function setLineColor(line, subtype) {
                     if (subtype == "") {
                         line.setOptions({
-                            strokeColor: '#778899'
+                            strokeColor: '#393'
                         });
                     } else if (subtype == "SOP") {
                         line.setOptions({
-                            strokeColor: 'blue'
+                            strokeColor: 'rgba(0,0,255, 0.5)'
                         });
                     } else if (subtype == "ONP") {
                         line.setOptions({
-                            strokeColor: 'red'
+                            strokeColor: 'rgba(255,0,0,0.5)'
                         });
                     } else if (subtype == "ONP&SOP") {
                         line.setOptions({
-                            strokeColor: 'green'
+                            strokeColor: 'rgba(255,0,255,0.5)'
                         });
                     }
                 }
