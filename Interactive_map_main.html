@@ -5,6 +5,7 @@
 <h3>OSU Campus Recycling Maps</h3>
 <p>Recycling is sorted into the following categories. Click to track where each goes and what it does. </p>
 <p>
+    <img id="all" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-all.png" alt="Track for all"  title="Track for All">
     <img id="paper" class="expand" src="http://web.engr.oregonstate.edu/~niguang/images/paper.png" alt="Track for Paper"  title="Track for Paper">
     <img id="cardboard" class="expand" src="http://web.engr.oregonstate.edu/~niguang/images/cardboard.png"  alt="Track for Cardboard" title="Track for Cardboard" >
     <img id="glass" class="expand" src="http://web.engr.oregonstate.edu/~niguang/images/glass.png" alt="Track for Glass"  title="Track for Glass" >
@@ -33,6 +34,7 @@ $.fn.getMap=(function(theUrl){
 });
 
 $(function() {
+    $('#all').getMap('http://web.engr.oregonstate.edu/~niguang/all.html');
     $('#paper').getMap('http://web.engr.oregonstate.edu/~niguang/paper.html');
     $('#cardboard').getMap('http://web.engr.oregonstate.edu/~niguang/cardboard.html');
     $('#glass').getMap('http://web.engr.oregonstate.edu/~niguang/glass.html');
