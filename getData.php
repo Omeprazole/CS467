@@ -13,8 +13,17 @@
         die("connection error" .$mysqli->connect_errno ."".$mysqli->connect_error);
     }
     //Get type from input
-    $type = $_GET["type"];
+    $type = (isset($_GET['type']) ? $_GET['type'] : null);
     //Fetch data from database
+    if(is_null($type)) {
+    $query = "SELECT main.id, main.type, s1.name, s1.lat, s1.lng, s2.name AS last_name, s2.lat AS last_lat,
+                    s2.lng AS last_lng, s1.hyperlink, images.image, images.source AS image_source,
+                    main.description, main.subtype
+                  FROM main
+                  LEFT JOIN stops AS s1 ON main.stop_id = s1.id
+                  LEFT JOIN stops AS s2 ON main.last_stop_id = s2.id
+                  LEFT JOIN images ON main.image_id = images.id";
+    } else {
     $query = "SELECT main.id, main.type, s1.name, s1.lat, s1.lng, s2.name AS last_name, s2.lat AS last_lat,
                 s2.lng AS last_lng, s1.hyperlink, images.image, images.source AS image_source,
                 main.description, main.subtype
@@ -23,6 +32,7 @@
               LEFT JOIN stops AS s2 ON main.last_stop_id = s2.id
               LEFT JOIN images ON main.image_id = images.id
               WHERE type = $type";
+    }
     header("Content-type: text/xml");
     if ($result = $mysqli->query($query)) {
         //output data of each row
