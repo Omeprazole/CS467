@@ -35,10 +35,12 @@
             border-bottom: 10px solid black;
         }
         /*Company name*/
-        .iw-container .company-name {
+        .iw-container .company-name a{
             color: white;
             font-size: 20px;
+            text-decoration: none;
         }
+
         /*recycling type*/
         .iw-container .recyling-type {
             color: black;
@@ -72,6 +74,10 @@
 
 <body>
 <div id="map">
+    /*<script
+            src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script> */
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
     <script>
@@ -155,6 +161,7 @@
                         });
                         //Set the animated symbol
                         animateCircle(line);
+                        //Set line color
                         setLineColor(line, subtype);
                         //Set the marker
                         var marker = new google.maps.Marker({
@@ -162,21 +169,42 @@
                             position: point,
                             label: label
                         });
-                        //Set the info window
+
+                        //Set the content of the info window
                         marker.addListener('mouseover', function() {
                             infowindow.close();
-                            infowindow.setContent('<div class="iw-container">'
-                                + '<div class="iw-header"><strong><div class="company-name">'
-                                + name + '</div></strong>'
-                                + '<div class="recyling-type">' + type + ' recycling</div><br>'
-                                + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '</a></div>'
-                                + '<a href="' + img_source + '" target="_blank">'
-                                + '<img src="' + image + '"' + image
-                                + 'alt="Insert Image Here"></a>'
-                                + '<p >(Image source: '
-                                + '<a href="' + img_source + '" target="_blank">' + img_source
-                                + '</a>)</p><p class="description">' + desc + '</p>'
-                                + '<img src="img/end.png" alt="Placeholder for end materials"></div>');
+
+                            if(img_source == "") {
+                               infowindow.setContent('<div class="iw-container">'
+                                    + '<div class="iw-header"><strong><div class="company-name">'
+                                    + '<a href="' + hyperlink + '" target="_blank">'
+                                    + name + '</a></div></strong>'
+                                    + '<div class="recyling-type">' + type + ' recycling</div><br>'
+                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '</a></div>'
+                                    + '<a href="' + img_source + '" target="_blank">'
+                                    + '<img src="' + image + '"' + image
+                                    + 'alt="Insert Image Here"></a>'
+                                    + '<p class="description">' + desc + '</p>'
+                                    + '<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"'
+                                    + 'alt="Placeholder for end materials"></div>');
+                            } else {
+                                infowindow.setContent('<div class="iw-container">'
+                                    + '<div class="iw-header"><strong><div class="company-name">'
+                                    + '<a href="' + hyperlink + '" target="_blank">'
+                                    + name + '</a></div></strong>'
+                                    //+ name + '</div></strong>'
+                                    + '<div class="recyling-type">' + type + ' recycling</div><br>'
+                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '</a></div>'
+                                    + '<a href="' + img_source + '" target="_blank">'
+                                    + '<img src="' + image + '"' + image
+                                    + 'alt="Insert Image Here"></a>'
+                                    + '<p >(Image source: '
+                                    + '<a href="' + img_source + '" target="_blank">' + img_source
+                                    + '</a>)</p><p class="description">' + desc + '</p>'
+                                    + '<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"'
+                                    + 'alt="Placeholder for end materials"></div>');
+                            }
+
                             //style infowindow
                             google.maps.event.addListenerOnce(infowindow, 'domready', function() {
                                 //default parent container of iw-container
@@ -217,7 +245,7 @@
                 function setLineColor(line, subtype) {
                     if (subtype == "") {
                         line.setOptions({
-                            strokeColor: '#393'
+                            strokeColor: '#778899'
                         });
                     } else if (subtype == "SOP") {
                         line.setOptions({
@@ -233,7 +261,8 @@
                         });
                     }
                 }
-            }
+
+}
         </script>
 </div>
 </body>
