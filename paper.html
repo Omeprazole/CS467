@@ -8,9 +8,7 @@
             width: 100%;
 overflow: visible
         }
-
  /*InfoWindow*/
-
         .iw-container {
             font-family: 'Gudea', Arial, Helvetica, Verdana, sans-serif;
             top: 15px !important;
@@ -18,7 +16,6 @@ overflow: visible
             padding: 0 10px 10px 10px;
             border: 1px solid black;
         }
-
         .iw-header {
             background-color: #DC4405;
             padding: 10px 10px 5px 10px;
@@ -26,16 +23,13 @@ overflow: visible
             margin: 0 -10px 10px -10px;
             border-bottom: 10px solid black;
         }
-
         /*Company name*/
-
-        .iw-container .company-name {
+        .iw-container .company-name a{
             color: white;
             font-size: 20px;
+            text-decoration: none;
         }
-
         /*recycling type*/
-
         .iw-container .recyling-type {
             color: black;
             font-weight: bold;
@@ -43,15 +37,11 @@ overflow: visible
             text-transform: capitalize;
             margin-bottom: -10px;
         }
-
         /*link*/
-
         .iw-container a {
             font-size: 14px;
         }
-
         /*infowindow images*/
-
         .iw-container img {
             display: block;
             margin: auto;
@@ -59,18 +49,20 @@ overflow: visible
             width: auto;
             max-height: 200px;
         }
-
         /*moves gm-style-iw to make up for removing the background*/
-
         .gm-style-iw {
             top: 20px !important;
+        }
+        .description {
+            font-family: 'Open sans',sans-serif;
+            font-size: 18px;
         }
     </style>
 </head>
 
 <body>
 
-    <div id="map"></div>
+<div id="map"></div>
 
 <!--removes CSS so map/markers can be drawn-->
 
@@ -94,10 +86,8 @@ for(var i=0;i<elements.length;i++){
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
 
-    <script>
-
+<script>
 var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype='' name='Garten' lat='44.9687' lng='-123.011' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://www.garten.org/services/admin/oregon/C19/' description='Mixed paper waste is sent to Garten where it is separated into ONP (i.e., newspaper) and SOP (i.e., office paper) streams' image='' image_source=''/><marker id='6' type='paper' subtype='ONPSOP' name='Michelsen Packaging Co' lat='46.6041' lng='-120.515' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://michelsenpackaging.com/' description='ONP and SOP streams sent to Michelsen to help produce molded pulp purple apple tray product for packaging fruits' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image3.png' image_source='http://michelsenpackaging.com/recycling/'/><marker id='7' type='paper' subtype='SOP' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='shipped directly to Pioneer Recycling' image='' image_source=''/><marker id='8' type='paper' subtype='SOP' name='Pioneer Recycling Services' lat='45.4001' lng='-122.542' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='http://www.pioneerrs.com/project/clackamas/' description='' image='' image_source=''/><marker id='9' type='paper' subtype='ONP' name='Northern Pacific Paper Company' lat='46.1268' lng='-122.98' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://norpacpaper.com/ ' description='ONP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image2.png' image_source='https://www.woodbizforum.com/weyerhaeuser-sells-printing-papers-business-in-the-us-to-one-rock-capital-partners/'/><marker id='21' type='paper' subtype='ONP' name='Keyes Fiber' lat='47.4862' lng='-120.316' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://www.keyespackaging.com/ Now' description='ONP stream is turned into a pulp then molded into packaging trays for produce and other food products' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image1.png' image_source='http://www.keyespackaging.com/production/'/><marker id='22' type='paper' subtype='SOP' name='Georgia-Pacific Corporation' lat='44.6147' lng='-123.936' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='https://www.gp.com/' description='SOP stream sent to GP in Halsey to help produce containerboard for packaging purposes' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image5.png' image_source='https://greenberry.com/project/lithium-conversion/'/><marker id='24' type='paper' subtype='SOP' name='China' lat='44.5989' lng='-124.761' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='' description='low-grade mixed paper waste is baled and exported to China, which is the only buyer of low-grade mixed paper on the west coast ' image='' image_source=''/><\/markers>");
-
         //Set up the map
         function initMap() {
             //Set up the marker of OSU campus
@@ -121,17 +111,14 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                 map: map,
                 title: 'Oregon State University'
             });
-
             //Define info window
             var infowindow = new google.maps.InfoWindow();
-
             //Define the symbol of line
             var lineSymbol = {
                 path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                 scale: 3,
                 strokeColor: '#393'
             };
-
             //Define the function for the animated symbol
             function animateCircle(line) {
                 var count = 0;
@@ -142,6 +129,26 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                     line.set('icons', icons);
                 }, 20);
             }
+            //Define the function of set the color of lines
+            function setLineColor(line, subtype) {
+                    if (subtype == "") {
+                        line.setOptions({
+                            strokeColor: '#778899'
+                        });
+                    } else if (subtype == "SOP") {
+                        line.setOptions({
+                            strokeColor: 'rgba(0,0,255, 0.5)'
+                        });
+                    } else if (subtype == "ONP") {
+                        line.setOptions({
+                            strokeColor: 'rgba(255,0,0,0.5)'
+                        });
+                    } else if (subtype == "ONP&SOP") {
+                        line.setOptions({
+                            strokeColor: 'rgba(255,0,255,0.5)'
+                        });
+                    }
+                }
 
             //place markers
             function placeMarkers() {
@@ -161,6 +168,8 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                         parseFloat(markerElem.getAttribute('last_lng')));
                     var label = name.charAt(0);
                     var desc = markerElem.getAttribute('description');
+                    var subtype = markerElem.getAttribute('subtype');
+                    var img_source = markerElem.getAttribute('image_source');
 
                     //Set the line
                     var line = new google.maps.Polyline({
@@ -174,27 +183,49 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                         }],
                         map: map
                     });
-
                     //Set the animated symbol
                     animateCircle(line);
-
+                    //Set line color
+                    setLineColor(line, subtype);
                     //Set the marker
                     var marker = new google.maps.Marker({
                         map: map,
                         position: point,
                         label: label
                     });
-
                     //Set the info window
                     marker.addListener('mouseover', function() {
                         infowindow.close();
-                        infowindow.setContent('<div class="iw-container"><div class="iw-header"><strong><div class="company-name">' + name + '<\/div><\/strong>' +
-                            '<div class="recyling-type">' + type + ' recycling<\/div><br>' +
-                            '<a href="' + hyperlink + '">' + hyperlink + '<\/a><\/div>' +
-                            '<img src="' + image + '"' + image + 'alt="Insert Image Here"><\/br>' +
-                            desc + '<br><br>' +
-                            '<img src="img/end.png" alt="Placeholder for end materials"><\/div>');
-
+                        if(img_source == "") {
+                        infowindow.setContent('<div class="iw-container">'
+                                    + '<div class="iw-header"><strong><div class="company-name">'
+                                    + '<a href="' + hyperlink + '" target="_blank">'
+                                    + name + '</a></div></strong>'
+                                    + '<div class="recyling-type">' + type + ' recycling</div><br>'
+                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '</a></div>'
+                                    + '<a href="' + img_source + '" target="_blank">'
+                                    + '<img src="' + image + '"' + image + '></a>'
+                                    + '<p class="description">' + desc + '</p>'
+                                    //+ '<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"'
+                                    //+ 'alt="Placeholder for end materials">'
+                                    + '</div>');
+                            } else {
+                                infowindow.setContent('<div class="iw-container">'
+                                    + '<div class="iw-header"><strong><div class="company-name">'
+                                    + '<a href="' + hyperlink + '" target="_blank">'
+                                    + name + '</a></div></strong>'
+                                    //+ name + '</div></strong>'
+                                    + '<div class="recyling-type">' + type + ' recycling</div><br>'
+                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '</a></div>'
+                                    + '<a href="' + img_source + '" target="_blank">'
+                                    + '<img src="' + image + '"' + image + '></a>'
+                                    + '<p >(Image source: '
+                                    + '<a href="' + img_source + '" target="_blank">' + img_source
+                                    + '</a>)</p><p class="description">' + desc + '</p>'
+                                    //+ '<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"'
+                                    //+ 'alt="Placeholder for end materials">'
+                                    + '</div>');
+                            }
                         //style infowindow
                         google.maps.event.addListenerOnce(infowindow, 'domready', function() {
                             //default parent container of iw-container
@@ -217,7 +248,6 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                                 'top': '21px'
                             });
                         });
-
                         //open infowindow
                         infowindow.open(map, marker);
                     });
@@ -225,10 +255,6 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
             };
             placeMarkers();
         }
-
-//Delete all other elements other than the map
-//Make the map full screen
-
     </script>
 </body>
 
