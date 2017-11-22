@@ -63,9 +63,6 @@ overflow: visible
 <body>
 
 <div id="map"></div>
-
-<!--removes CSS so map/markers can be drawn-->
-
 <script>
 var elements = document.querySelectorAll('link[rel=stylesheet]');
 for(var i=0;i<elements.length;i++){
@@ -200,31 +197,31 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                         infowindow.setContent('<div class="iw-container">'
                                     + '<div class="iw-header"><strong><div class="company-name">'
                                     + '<a href="' + hyperlink + '" target="_blank">'
-                                    + name + '</a></div></strong>'
-                                    + '<div class="recyling-type">' + type + ' recycling</div><br>'
-                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '</a></div>'
+                                    + name + '<\/a><\/div><\/strong>'
+                                    + '<div class="recyling-type">' + type + ' recycling<\/div><br>'
+                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '<\/a><\/div>'
                                     + '<a href="' + img_source + '" target="_blank">'
-                                    + '<img src="' + image + '"' + image + '></a>'
-                                    + '<p class="description">' + desc + '</p>'
+                                    + '<img src="' + image + '"' + image + '><\/a>'
+                                    + '<p class="description">' + desc + '<\/p>'
                                     //+ '<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"'
                                     //+ 'alt="Placeholder for end materials">'
-                                    + '</div>');
+                                    + '<\/div>');
                             } else {
                                 infowindow.setContent('<div class="iw-container">'
                                     + '<div class="iw-header"><strong><div class="company-name">'
                                     + '<a href="' + hyperlink + '" target="_blank">'
-                                    + name + '</a></div></strong>'
+                                    + name + '<\/a><\/div><\/strong>'
                                     //+ name + '</div></strong>'
-                                    + '<div class="recyling-type">' + type + ' recycling</div><br>'
-                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '</a></div>'
+                                    + '<div class="recyling-type">' + type + ' recycling<\/div><br>'
+                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '<\/a><\/div>'
                                     + '<a href="' + img_source + '" target="_blank">'
-                                    + '<img src="' + image + '"' + image + '></a>'
+                                    + '<img src="' + image + '"' + image + '><\/a>'
                                     + '<p >(Image source: '
                                     + '<a href="' + img_source + '" target="_blank">' + img_source
-                                    + '</a>)</p><p class="description">' + desc + '</p>'
+                                    + '<\/a>)<\/p><p class="description">' + desc + '<\/p>'
                                     //+ '<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"'
                                     //+ 'alt="Placeholder for end materials">'
-                                    + '</div>');
+                                    + '<\/div>');
                             }
                         //style infowindow
                         google.maps.event.addListenerOnce(infowindow, 'domready', function() {
