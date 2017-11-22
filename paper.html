@@ -6,9 +6,11 @@
         #map {
             height: 400px;
             width: 100%;
-overflow: visible
+            overflow: visible
         }
- /*InfoWindow*/
+
+        /*InfoWindow*/
+
         .iw-container {
             font-family: 'Gudea', Arial, Helvetica, Verdana, sans-serif;
             top: 15px !important;
@@ -16,6 +18,7 @@ overflow: visible
             padding: 0 10px 10px 10px;
             border: 1px solid black;
         }
+
         .iw-header {
             background-color: #DC4405;
             padding: 10px 10px 5px 10px;
@@ -23,13 +26,17 @@ overflow: visible
             margin: 0 -10px 10px -10px;
             border-bottom: 10px solid black;
         }
+
         /*Company name*/
-        .iw-container .company-name a{
+
+        .iw-container .company-name a {
             color: white;
             font-size: 20px;
             text-decoration: none;
         }
+
         /*recycling type*/
+
         .iw-container .recyling-type {
             color: black;
             font-weight: bold;
@@ -37,11 +44,15 @@ overflow: visible
             text-transform: capitalize;
             margin-bottom: -10px;
         }
+
         /*link*/
+
         .iw-container a {
             font-size: 14px;
         }
+
         /*infowindow images*/
+
         .iw-container img {
             display: block;
             margin: auto;
@@ -49,42 +60,28 @@ overflow: visible
             width: auto;
             max-height: 200px;
         }
+
         /*moves gm-style-iw to make up for removing the background*/
+
         .gm-style-iw {
             top: 20px !important;
         }
+
         .description {
-            font-family: 'Open sans',sans-serif;
+            font-family: 'Open sans', sans-serif;
             font-size: 18px;
         }
     </style>
 </head>
 
 <body>
-
-<div id="map"></div>
-<script>
-var elements = document.querySelectorAll('link[rel=stylesheet]');
-for(var i=0;i<elements.length;i++){
-    elements[i].parentNode.removeChild(elements[i]);
-}
-</script>
-<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-<script>
-    var selectors = ["ul", "#osu-top-hat", "#mobile-icon-menu", "#footer", ".slicknav_menu", "#skip-link",
-    ".group-header",  "#search-overlay", "#messages", "#page-title", ".tabs"];
-    var redundancy = selectors.join(", ");
- $(document).delay(400).queue(function() {
-       $(redundancy).remove();
-     $(this).dequeue();
-    });
-    $('#map').css({position:"absolute", width:"100%", height:"100%"});
-</script>
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
-
-<script>
-var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype='' name='Garten' lat='44.9687' lng='-123.011' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://www.garten.org/services/admin/oregon/C19/' description='Mixed paper waste is sent to Garten where it is separated into ONP (i.e., newspaper) and SOP (i.e., office paper) streams' image='' image_source=''/><marker id='6' type='paper' subtype='ONPSOP' name='Michelsen Packaging Co' lat='46.6041' lng='-120.515' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://michelsenpackaging.com/' description='ONP and SOP streams sent to Michelsen to help produce molded pulp purple apple tray product for packaging fruits' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image3.png' image_source='http://michelsenpackaging.com/recycling/'/><marker id='7' type='paper' subtype='SOP' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='shipped directly to Pioneer Recycling' image='' image_source=''/><marker id='8' type='paper' subtype='SOP' name='Pioneer Recycling Services' lat='45.4001' lng='-122.542' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='http://www.pioneerrs.com/project/clackamas/' description='' image='' image_source=''/><marker id='9' type='paper' subtype='ONP' name='Northern Pacific Paper Company' lat='46.1268' lng='-122.98' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://norpacpaper.com/ ' description='ONP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image2.png' image_source='https://www.woodbizforum.com/weyerhaeuser-sells-printing-papers-business-in-the-us-to-one-rock-capital-partners/'/><marker id='21' type='paper' subtype='ONP' name='Keyes Fiber' lat='47.4862' lng='-120.316' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://www.keyespackaging.com/ Now' description='ONP stream is turned into a pulp then molded into packaging trays for produce and other food products' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image1.png' image_source='http://www.keyespackaging.com/production/'/><marker id='22' type='paper' subtype='SOP' name='Georgia-Pacific Corporation' lat='44.6147' lng='-123.936' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='https://www.gp.com/' description='SOP stream sent to GP in Halsey to help produce containerboard for packaging purposes' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image5.png' image_source='https://greenberry.com/project/lithium-conversion/'/><marker id='24' type='paper' subtype='SOP' name='China' lat='44.5989' lng='-124.761' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='' description='low-grade mixed paper waste is baled and exported to China, which is the only buyer of low-grade mixed paper on the west coast ' image='' image_source=''/><\/markers>");
+    <div id="map"></div>
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
+    <script src="https://www.doogal.co.uk/js/FullScreenControl.js" type="text/javascript"></script>
+    <script>
+        var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype='' name='Garten' lat='44.9687' lng='-123.011' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://www.garten.org/services/admin/oregon/C19/' description='Mixed paper waste is sent to Garten where it is separated into ONP (i.e., newspaper) and SOP (i.e., office paper) streams' image='' image_source=''/><marker id='6' type='paper' subtype='ONPSOP' name='Michelsen Packaging Co' lat='46.6041' lng='-120.515' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://michelsenpackaging.com/' description='ONP and SOP streams sent to Michelsen to help produce molded pulp purple apple tray product for packaging fruits' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image3.png' image_source='http://michelsenpackaging.com/recycling/'/><marker id='7' type='paper' subtype='SOP' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='shipped directly to Pioneer Recycling' image='' image_source=''/><marker id='8' type='paper' subtype='SOP' name='Pioneer Recycling Services' lat='45.4001' lng='-122.542' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='http://www.pioneerrs.com/project/clackamas/' description='' image='' image_source=''/><marker id='9' type='paper' subtype='ONP' name='Northern Pacific Paper Company' lat='46.1268' lng='-122.98' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://norpacpaper.com/ ' description='ONP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image2.png' image_source='https://www.woodbizforum.com/weyerhaeuser-sells-printing-papers-business-in-the-us-to-one-rock-capital-partners/'/><marker id='21' type='paper' subtype='ONP' name='Keyes Fiber' lat='47.4862' lng='-120.316' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://www.keyespackaging.com/ Now' description='ONP stream is turned into a pulp then molded into packaging trays for produce and other food products' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image1.png' image_source='http://www.keyespackaging.com/production/'/><marker id='22' type='paper' subtype='SOP' name='Georgia-Pacific Corporation' lat='44.6147' lng='-123.936' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='https://www.gp.com/' description='SOP stream sent to GP in Halsey to help produce containerboard for packaging purposes' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image5.png' image_source='https://greenberry.com/project/lithium-conversion/'/><marker id='24' type='paper' subtype='SOP' name='China' lat='44.5989' lng='-124.761' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='' description='low-grade mixed paper waste is baled and exported to China, which is the only buyer of low-grade mixed paper on the west coast ' image='' image_source=''/><\/markers>");
         //Set up the map
         function initMap() {
             //Set up the marker of OSU campus
@@ -99,7 +96,7 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                     lat: 45.512794,
                     lng: -122.679565
                 },
-		fullscreenControl: true
+                fullscreenControl: true
             });
             var OSUimage = 'http://maps.google.com/mapfiles/ms/micons/recycle.png';
             var OSUmarker = new google.maps.Marker({
@@ -114,7 +111,7 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
             var lineSymbol = {
                 path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                 scale: 3,
-                strokeColor: '#393'
+                //strokeColor: '#393'
             };
             //Define the function for the animated symbol
             function animateCircle(line) {
@@ -128,25 +125,26 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
             }
             //Define the function of set the color of lines
             function setLineColor(line, subtype) {
-                    if (subtype == "") {
-                        line.setOptions({
-                            strokeColor: '#778899'
-                        });
-                    } else if (subtype == "SOP") {
-                        line.setOptions({
-                            strokeColor: 'rgba(0,0,255, 0.5)'
-                        });
-                    } else if (subtype == "ONP") {
-                        line.setOptions({
-                            strokeColor: 'rgba(255,0,0,0.5)'
-                        });
-                    } else if (subtype == "ONP&SOP") {
-                        line.setOptions({
-                            strokeColor: 'rgba(255,0,255,0.5)'
-                        });
-                    }
+                if (subtype == "") {
+                    line.setOptions({
+                        strokeColor: '#778899'
+                    });
+                } else if (subtype == "SOP") {
+                    line.setOptions({
+                        strokeColor: 'rgba(0,0,255, 0.5)'
+                    });
+                } else if (subtype == "ONP") {
+                    line.setOptions({
+                        strokeColor: 'rgba(255,0,0,0.5)'
+                    });
+                } else if (subtype == "ONP&SOP") {
+                    line.setOptions({
+                        strokeColor: 'rgba(255,0,255,0.5)'
+                    });
                 }
-
+            }
+            //Set up a full screen button
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(FullScreenControl(map));
             //place markers
             function placeMarkers() {
                 var xml = xmlString;
@@ -193,36 +191,22 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                     //Set the info window
                     marker.addListener('mouseover', function() {
                         infowindow.close();
-                        if(img_source == "") {
-                        infowindow.setContent('<div class="iw-container">'
-                                    + '<div class="iw-header"><strong><div class="company-name">'
-                                    + '<a href="' + hyperlink + '" target="_blank">'
-                                    + name + '<\/a><\/div><\/strong>'
-                                    + '<div class="recyling-type">' + type + ' recycling<\/div><br>'
-                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '<\/a><\/div>'
-                                    + '<a href="' + img_source + '" target="_blank">'
-                                    + '<img src="' + image + '"' + image + '><\/a>'
-                                    + '<p class="description">' + desc + '<\/p>'
-                                    //+ '<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"'
-                                    //+ 'alt="Placeholder for end materials">'
-                                    + '<\/div>');
-                            } else {
-                                infowindow.setContent('<div class="iw-container">'
-                                    + '<div class="iw-header"><strong><div class="company-name">'
-                                    + '<a href="' + hyperlink + '" target="_blank">'
-                                    + name + '<\/a><\/div><\/strong>'
-                                    //+ name + '</div></strong>'
-                                    + '<div class="recyling-type">' + type + ' recycling<\/div><br>'
-                                    + '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '<\/a><\/div>'
-                                    + '<a href="' + img_source + '" target="_blank">'
-                                    + '<img src="' + image + '"' + image + '><\/a>'
-                                    + '<p >(Image source: '
-                                    + '<a href="' + img_source + '" target="_blank">' + img_source
-                                    + '<\/a>)<\/p><p class="description">' + desc + '<\/p>'
-                                    //+ '<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"'
-                                    //+ 'alt="Placeholder for end materials">'
-                                    + '<\/div>');
-                            }
+
+                        infowindow.setContent('<div class="iw-container">' +
+                            '<div class="iw-header"><strong><div class="company-name">' +
+                            '<a href="' + hyperlink + '" target="_blank">' +
+                            name + '<\/a><\/div><\/strong>' +
+                            '<div class="recyling-type">' + type + ' recycling<\/div><br>' +
+                            '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '<\/a><\/div>' +
+                            '<a href="' + img_source + '" target="_blank">' +
+                            '<img src="' + image + '"' + image + '><\/a>' +
+                            '<p id="imgsource">(Image source: ' +
+                            '<a href="' + img_source + '" target="_blank">' + img_source +
+                            '<\/a>)<\/p><p class="description">' + desc + '<\/p>' +
+                            //'<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"' +
+                            //'alt="Placeholder for end materials">' +
+                            '<\/div>');
+
                         //style infowindow
                         google.maps.event.addListenerOnce(infowindow, 'domready', function() {
                             //default parent container of iw-container
@@ -244,14 +228,39 @@ var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype=''
                                 'right': '40px',
                                 'top': '21px'
                             });
+                            //remove img source when none
+                            if (img_source == "") {
+                                $('#imgsource').remove();
+                            }
                         });
-                        //open infowindow
+
                         infowindow.open(map, marker);
                     });
                 });
             };
             placeMarkers();
         }
+
+        //Remove the style of the editor
+        var elements = document.querySelectorAll('link[rel=stylesheet]');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].parentNode.removeChild(elements[i]);
+        }
+
+        //remove the redundancy from the editor
+        var selectors = ["ul", "#osu-top-hat", "#mobile-icon-menu", "#footer", ".slicknav_menu", "#skip-link",
+            ".group-header", "#search-overlay", "#messages", "#page-title", ".tabs"
+        ];
+        var redundancy = selectors.join(", ");
+        $(document).delay(400).queue(function() {
+            $(redundancy).remove();
+            $(this).dequeue();
+        });
+        $('#map').css({
+            position: "absolute",
+            width: "100%",
+            height: "100%"
+        });
     </script>
 </body>
 
