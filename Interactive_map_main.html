@@ -1,4 +1,5 @@
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script
             src="https://code.jquery.com/jquery-3.2.1.js"
             integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
@@ -7,9 +8,6 @@
 <p>Recycling is sorted into the following categories. Click to track where each goes and what it does. </p>
 
 <div id="icon-row">
-    <div class="icon-imgs">
-    <img id="all" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-all.png" alt="Track for all"  title="Track for All"> 
-    </div>
     <div class="icon-imgs">
     <img id="paper" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-paper.png" alt="Track for Paper"  title="Track for Paper">
 </div>
@@ -32,6 +30,7 @@
     <img id="landfill" class="expand" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/landfill.png" alt="Track for Landfill Waste" title="Track for Landfill Waste" >
 </div>
 </div>
+<p id="fullScreen">Full Screen button below <i class="fa fa-arrow-down" aria-hidden="true"></i></p>
 <p><iframe id="recycling_map" frameborder="0" scrolling="no" width="100%" height="600" src="http://recycle.oregonstate.edu/campus-recycling-interactive-map/all-0" marginheight="0" marginwidth="0" allowfullscreen ></iframe></p>
 
 <script>
@@ -52,7 +51,6 @@ $.fn.getMap=(function(theUrl){
 });
 
 $(function() {
-    $('#all').getMap('http://web.engr.oregonstate.edu/~niguang/all.html');
     $('#paper').getMap('http://recycle.oregonstate.edu/recycling-map/paper #map');
     $('#cardboard').getMap('http://recycle.oregonstate.edu/recycling-map/cardboard #map');
     $('#glass').getMap('http://recycle.oregonstate.edu/recycling-map/glass #map');
@@ -67,7 +65,7 @@ $(function() {
 <style>
 #icon-row {
   height: 100%;
-  background-color: #FEF6E4;
+  /*background-color: #FEF6E4;*/
   width: 100%;
   white-space: nowrap;
   display: table;
@@ -83,5 +81,12 @@ $(function() {
  max-width: 100%;
  height: auto !important;
 }
+
+   #fullScreen {
+    text-align: right;
+    size:10px;
+    padding-right: 1%;
+    }
 </style>
+
 
