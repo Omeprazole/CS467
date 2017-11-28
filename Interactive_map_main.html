@@ -52,11 +52,8 @@
     <div class="icon-imgs">
         <img id="landfill" class="expand" src="http://recycle.oregonstate.edu/sites/fa.oregonstate.edu/files/landfill.png" alt="Track for Landfill Waste" title="Track for Landfill Waste" >
     </div>
-    <div class="icon-imgs">
-        <img id="all" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-all.png" alt="Track for all"  title="Track for All">
-    </div>
 </div>
-<p><iframe id="recycling_map" frameborder="0" scrolling="no" width="100%" height="600" src="http://web.engr.oregonstate.edu/~niguang/all.html" marginheight="0" marginwidth="0" allowfullscreen ></iframe></p>
+<p><iframe id="recycling_map" frameborder="0" scrolling="no" width="100%" height="600" src="http://recycle.oregonstate.edu/campus-recycling-interactive-map/all-0" marginheight="0" marginwidth="0" allowfullscreen ></iframe></p>
 
 <script>
 //Define the function of answering user's clicking on each image.
@@ -76,7 +73,7 @@ $.fn.getMap=(function(theUrl){
 
 //fetch maps
 $(function() {
-    $('#all').getMap('http://web.engr.oregonstate.edu/~niguang/all.html');
+    //$('#all').getMap('http://recycle.oregonstate.edu/campus-recycling-interactive-map/all-0');
     $('#paper').getMap('http://recycle.oregonstate.edu/recycling-map/paper #map');
     $('#cardboard').getMap('http://recycle.oregonstate.edu/recycling-map/cardboard #map');
     $('#glass').getMap('http://recycle.oregonstate.edu/recycling-map/glass #map');
