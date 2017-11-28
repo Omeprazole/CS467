@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            overflow: visible
+        }
+
+        /*InfoWindow*/
+
+        .iw-container {
+            font-family: 'Gudea', Arial, Helvetica, Verdana, sans-serif;
+            top: 15px !important;
+            background-color: white;
+            padding: 0 10px 10px 10px;
+            border: 1px solid black;
+        }
+
+        .iw-header {
+            background-color: #DC4405;
+            padding: 10px 10px 5px 10px;
+            width: auto;
+            margin: 0 -10px 10px -10px;
+            border-bottom: 10px solid black;
+        }
+
+        /*Company name*/
+
+        .iw-container .company-name a {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        /*recycling type*/
+
+        .iw-container .recyling-type {
+            color: black;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: capitalize;
+            margin-bottom: -10px;
+        }
+
+        /*link*/
+
+        .iw-container a {
+            font-size: 14px;
+        }
+
+        /*infowindow images*/
+
+        .iw-container img {
+            display: block;
+            margin: auto;
+            height: 100%;
+            width: auto;
+            max-height: 200px;
+        }
+
+        /*moves gm-style-iw to make up for removing the background*/
+
+        .gm-style-iw {
+            top: 20px !important;
+        }
+
+        .description {
+            font-family: 'Open sans', sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="map"></div>
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
+<script>
+            var xmlString = jQuery.parseXML("<markers><marker id='23' type='landfill' subtype='' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='' image='' image_source=''/><\/markers>");        function initMap() {
+            //Set up the marker of OSU campus
+            var OSU = {
+                lat: 44.562854,
+                lng: -123.278977
+            };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                gestureHandling: 'greedy',
+                zoom: 8,
+                center: {
+                    lat: 45.512794,
+                    lng: -122.679565
+                },
+                fullscreenControl: true
+            });
+            var OSUimage = 'http://maps.google.com/mapfiles/ms/micons/recycle.png';
+            var OSUmarker = new google.maps.Marker({
+                position: OSU,
+                icon: OSUimage,
+                map: map,
+                title: 'Oregon State University'
+            });
+            //Define info window
+            var infowindow = new google.maps.InfoWindow();
+            //Define the symbol of line
+            var lineSymbol = {
+                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                scale: 3,
+                strokeColor: '#393'
+            };
+            //Define the function for the animated symbol
+            function animateCircle(line) {
+                var count = 0;
+                window.setInterval(function() {
+                    count = (count + 1) % 200;
+                    var icons = line.get('icons');
+                    icons[0].offset = (count / 2) + '%';
+                    line.set('icons', icons);
+                }, 20);
+            }
+
+            //place markers
+            function placeMarkers() {
+                var xml = xmlString;
+                var markers = xml.documentElement.getElementsByTagName('marker');
+                Array.prototype.forEach.call(markers, function(markerElem) {
+                    var id = markerElem.getAttribute('id');
+                    var name = markerElem.getAttribute('name');
+                    var type = markerElem.getAttribute('type');
+                    var hyperlink = markerElem.getAttribute('hyperlink');
+                    var image = markerElem.getAttribute('image');
+                    var point = new google.maps.LatLng(
+                        parseFloat(markerElem.getAttribute('lat')),
+                        parseFloat(markerElem.getAttribute('lng')));
+                    var lastPoint = new google.maps.LatLng(
+                        parseFloat(markerElem.getAttribute('last_lat')),
+                        parseFloat(markerElem.getAttribute('last_lng')));
+                    var label = name.charAt(0);
+                    var desc = markerElem.getAttribute('description');
+                    var subtype = markerElem.getAttribute('subtype');
+                    var img_source = markerElem.getAttribute('image_source');
+
+                    //Set the line
+                    var line = new google.maps.Polyline({
+                        path: [lastPoint, point],
+                        strokeColor: '#778899',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2,
+                        icons: [{
+                            icon: lineSymbol,
+                            offset: '100%'
+                        }],
+                        map: map
+                    });
+                    //Set the animated symbol
+                    animateCircle(line);
+
+                    //Set the marker
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: point,
+                        label: label
+                    });
+                    //Set the info window
+                    marker.addListener('mouseover', function() {
+                        infowindow.close();
+
+                        infowindow.setContent('<div class="iw-container">' +
+                            '<div class="iw-header"><strong><div class="company-name">' +
+                            '<a href="' + hyperlink + '" target="_blank">' +
+                            name + '<\/a><\/div><\/strong>' +
+                            '<div class="recyling-type">' + type + ' recycling<\/div><br>' +
+                            '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '<\/a><\/div>' +
+                            '<a href="' + img_source + '" target="_blank">' +
+                            '<img src="' + image + '"' + image + '><\/a>' +
+                            '<p id="imgsource">(Image source: ' +
+                            '<a href="' + img_source + '" target="_blank">' + img_source +
+                            '<\/a>)<\/p><p class="description">' + desc + '<\/p>' +
+                            //'<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"' +
+                            //'alt="Placeholder for end materials">' +
+                            '<\/div>');
+
+                        //style infowindow
+                        google.maps.event.addListenerOnce(infowindow, 'domready', function() {
+                            //default parent container of iw-container
+                            iwDefault = $('.gm-style-iw').prev();
+                            //removes shadow
+                            iwDefault.children(':nth-child(2)').css({
+                                'display': 'none'
+                            });
+                            //removes background color
+                            iwDefault.children(':nth-child(4)').css({
+                                'display': 'none'
+                            });
+                            //brings tail on top of iw-container
+                            iwDefault.children(':nth-child(3)').css({
+                                'z-index': '1'
+                            });
+                            //repositions close button
+                            $('.gm-style-iw').next().css({
+                                'right': '40px',
+                                'top': '21px'
+                            });
+                            //remove img source when none
+                            if (img_source == "") {
+                                $('#imgsource').remove();
+                            }
+                        });
+
+                        infowindow.open(map, marker);
+                    });
+                });
+            };
+            placeMarkers();
+        }
+
+        //Remove the style of the editor
+        var elements = document.querySelectorAll('link[rel=stylesheet]');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].parentNode.removeChild(elements[i]);
+        }
+
+        //remove the redundancy from the editor
+        var selectors = ["ul", "#osu-top-hat", "#mobile-icon-menu", "#footer", ".slicknav_menu", "#skip-link",
+            ".group-header", "#search-overlay", "#messages", "#page-title", ".tabs"
+        ];
+        var redundancy = selectors.join(", ");
+        $(document).delay(400).queue(function() {
+            $(redundancy).remove();
+            $(this).dequeue();
+        });
+        $('#map').css({
+            position: "absolute",
+            width: "100%",
+            height: "100%"
+        });
+    </script>
+</body>
+
+</html>
