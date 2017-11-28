@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: oniddb
--- Generation Time: Oct 26, 2017 at 01:08 PM
+-- Generation Time: Nov 27, 2017 at 04:32 PM
 -- Server version: 5.5.55
 -- PHP Version: 5.2.6-1+lenny16
 
@@ -31,14 +31,14 @@ CREATE TABLE IF NOT EXISTS `images` (
 --
 
 INSERT INTO `images` (`id`, `image`, `source`) VALUES
-(1, 'http://web.engr.oregonstate.edu/~niguang/images/image1.png', 'http://www.keyespackaging.com/production/'),
-(2, 'http://web.engr.oregonstate.edu/~niguang/images/image2.png', '''https://www.woodbizforum.com/weyerhaeuser-sells-printing-papers-business-in-the-us-to-one-rock-capital-partners/'),
-(3, 'http://web.engr.oregonstate.edu/~niguang/images/image3.png', 'http://michelsenpackaging.com/recycling/'),
-(4, 'http://web.engr.oregonstate.edu/~niguang/images/image4.png', 'http://www.kapstonepaper.com/location/longview-wa/'),
-(5, 'http://web.engr.oregonstate.edu/~niguang/images/image5.png', 'https://greenberry.com/project/lithium-conversion/'),
-(6, 'http://web.engr.oregonstate.edu/~niguang/images/image6.png', 'http://epicscan.com/project/georgia-pacific/'),
-(7, 'http://web.engr.oregonstate.edu/~niguang/images/image7.png', 'http://www.ptpc.com/?page_id=308'),
-(8, 'http://web.engr.oregonstate.edu/~niguang/images/image6.png', 'Pete Grell at Garten');
+(1, 'http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image1.png', 'http://www.keyespackaging.com/production/'),
+(2, 'http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image2.png', 'https://www.woodbizforum.com/weyerhaeuser-sells-printing-papers-business-in-the-us-to-one-rock-capital-partners/'),
+(3, 'http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image3.png', 'http://michelsenpackaging.com/recycling/'),
+(4, 'http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image4.png', 'http://www.kapstonepaper.com/location/longview-wa/'),
+(5, 'http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image5.png', 'https://greenberry.com/project/lithium-conversion/'),
+(6, 'http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image6.png', 'http://epicscan.com/project/georgia-pacific/'),
+(7, 'http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image7.png', 'http://www.ptpc.com/?page_id=308'),
+(8, 'http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image6.png', 'Pete Grell at Garten');
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `main` (
   `image_id` int(11) DEFAULT NULL,
   `subtype` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `main`
@@ -63,14 +63,14 @@ CREATE TABLE IF NOT EXISTS `main` (
 
 INSERT INTO `main` (`id`, `stop_id`, `type`, `last_stop_id`, `description`, `image_id`, `subtype`) VALUES
 (1, 2, 'cardboard', 1, 'Cardboard is first sent to Garten’s Recycling Services Division where it is manufactured into corrugated boxes. Garten accepts a variety of recyclable materials including glass, paper, aluminum, plastic, and even offers recycling for electronics.', 8, NULL),
-(2, 3, 'cardboard', 2, 'One of three stop of cardboard boxes to help produce and package copy paper and printing/publishing stock, which is then sent to warehouses in MO, IL, and PA', 4, NULL),
+(2, 3, 'cardboard', 2, 'This facility processes corrugated and solid fiber products into a variety of solid and liquid bulk tote containers, solid fiber products and sheets.', 4, NULL),
 (3, 4, 'cardboard', 2, 'One of three stops of cardboard boxes to help produce kraft pulp, paper, containerboard, and specialty products', 7, NULL),
 (4, 5, 'cardboard', 2, 'One of three stops of cardboards boxes to help produce containerboard for packaging purposes', 6, NULL),
-(5, 2, 'paper', 1, 'Mixed paper waste is sent to Garten where it is separated into ONP (i.e., newspaper) and SOP (i.e., office paper) streams', NULL, NULL),
-(6, 6, 'paper', 2, 'ONP and SOP streams sent to Michelsen to help produce molded pulp “purple apple tray” product for packaging fruits', 3, 'ONP&SOP'),
+(5, 2, 'paper', 1, 'Mixed paper waste is sent to Garten where it is separated into ONP (i.e., newspaper) , SOP (i.e., office paper) , and OCC paper streams.', NULL, NULL),
+(6, 6, 'paper', 2, 'ONP is sent to Michelsen to help produce molded pulp "purple apple tray" product for packaging fruits and other food products.', 3, 'ONP'),
 (7, 7, 'paper', 2, 'shipped directly to Pioneer Recycling', NULL, 'SOP'),
 (8, 8, 'paper', 7, '', NULL, 'SOP'),
-(9, 14, 'paper', 2, 'ONP and SOP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World', 2, 'ONP'),
+(9, 14, 'paper', 2, 'ONP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World', 2, 'ONP'),
 (10, 11, 'aluminum cans', 1, NULL, NULL, NULL),
 (11, 7, 'aluminum cans', 1, 'shipped directly to Pioneer Recycling', NULL, NULL),
 (12, 8, 'aluminum cans', 7, NULL, NULL, NULL),
@@ -81,9 +81,15 @@ INSERT INTO `main` (`id`, `stop_id`, `type`, `last_stop_id`, `description`, `ima
 (17, 9, 'glass', 1, 'Glass is sent to Glass to Glass where it is color-sorted and processed into glass cullets (i.e. small pieces of glass)', NULL, NULL),
 (18, 10, 'glass', 9, 'The glass cullets are then purchased by O-I and they produces mainly beer bottles bought by local microbreweries', NULL, NULL),
 (19, 7, 'compost', 1, NULL, NULL, NULL),
-(20, 12, 'compost', 1, 'Just north of Corvallis, this facility removes contaminants and aerates and monitors material until sale ready. It is then sold to individuals for backyard/garden use and to commercial customers (farmers). PRC process ~100,000 tons of yard debris/food was', NULL, NULL),
-(21, 15, 'paper', 2, 'ONP stream is turned into a pulp then molded into packaging trays for produce and other food products', 1, 'ONP'),
-(22, 5, 'paper', 2, 'SOP stream sent to GP in Halsey to help produce containerboard for packaging purposes', 5, 'SOP');
+(20, 13, 'compost', 1, 'Just north of Corvallis, this facility removes contaminants and aerates and monitors material until sale ready. It is then sold to individuals for backyard/garden use and to commercial customers (farmers). PRC process ~100,000 tons of yard debris/food was', NULL, NULL),
+(21, 15, 'paper', 2, 'ONP and SOP stream are turned into a pulp then molded into packaging trays for produce and other food products.', 1, 'ONP&SOP'),
+(22, 5, 'paper', 2, 'SOP stream sent to GP in Halsey to help produce containerboard for packaging purposes', 5, 'SOP'),
+(23, 7, 'landfill', 1, NULL, NULL, NULL),
+(24, 16, 'paper', 2, 'low-grade mixed paper waste is baled and exported to China, which is the only buyer of low-grade mixed paper on the west coast ', NULL, 'SOP'),
+(25, 11, 'glass', 1, NULL, NULL, NULL),
+(26, 7, 'glass', 1, 'baled and shipped directly to Glass to Glass', NULL, NULL),
+(27, 9, 'glass', 7, NULL, NULL, NULL),
+(28, 10, 'glass', 7, 'The glass cullets are then purchased by O-I and they produces mainly beer bottles bought by local microbreweries', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -98,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `stops` (
   `name` varchar(64) NOT NULL,
   `hyperlink` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `stops`
@@ -110,7 +116,7 @@ INSERT INTO `stops` (`id`, `lat`, `lng`, `name`, `hyperlink`) VALUES
 (3, 46.1045, -122.917, 'Kapstone', 'http://www.kapstonepaper.com/location/longview-wa/ '),
 (4, 48.0955, -122.8, 'Port Townsend Paper Company', 'http://www.ptpc.com/'),
 (5, 44.6147, -123.936, 'Georgia-Pacific Corporation', 'https://www.gp.com/'),
-(6, 46.6041, -120.515, 'Michelsen Packaging Co', 'http://michelsenpackaging.com/'),
+(6, 46.6041, -120.515, 'Michelsen Packaging Company', 'http://michelsenpackaging.com/'),
 (7, 44.5923, -123.252, 'Republic Services', 'http://local.republicservices.com/site/Corvallis-OR'),
 (8, 45.4001, -122.542, 'Pioneer Recycling Services', 'http://www.pioneerrs.com/project/clackamas/'),
 (9, 45.5833, -122.678, 'Glass to Glass', NULL),
@@ -119,5 +125,5 @@ INSERT INTO `stops` (`id`, `lat`, `lng`, `name`, `hyperlink`) VALUES
 (12, 45.8349, -122.829, 'ORPET', 'https://www.obrc.com/Partners/ORPET'),
 (13, 44.7003, -123.198, 'Pacific Region Compost', NULL),
 (14, 46.1268, -122.98, 'Northern Pacific Paper Company', 'http://norpacpaper.com/ '),
-(15, 47.4862, -120.316, 'Keyes Fiber', 'http://www.keyespackaging.com/ Now');
-
+(15, 47.4862, -120.316, 'Keyes Fiber', 'http://www.keyespackaging.com/ Now'),
+(16, 44.5989, -124.761, 'China', NULL);
