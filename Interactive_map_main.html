@@ -1,62 +1,42 @@
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-    <style>
-    /*Making images proportional to the size of screen*/
-    #icon-row {
-    height: 100%;
-    background-color: #FEF6E4;
-    width: 100%;
-    white-space: nowrap;
-    display: table;
-    }
-
-    .icon-imgs {
-    vertical-align: middle;
-    padding: 13px;
-    display: table-cell;
-    }
-
-    .icon-imgs img {
-    max-width: 100%;
-    height: auto !important;
-    }
-    </style>
-</head>
+<script
+            src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
 <h3>OSU Campus Recycling Maps</h3>
 <p>Recycling is sorted into the following categories. Click to track where each goes and what it does. </p>
 
 <div id="icon-row">
     <div class="icon-imgs">
-        <img id="paper" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-paper.png" alt="Track for Paper"  title="Track for Paper">
+    <img id="all" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-all.png" alt="Track for all"  title="Track for All"> 
     </div>
     <div class="icon-imgs">
-        <img id="cardboard" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-cardboard.png"  alt="Track for Cardboard" title="Track for Cardboard" >
-    </div>
+    <img id="paper" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-paper.png" alt="Track for Paper"  title="Track for Paper">
+</div>
     <div class="icon-imgs">
-        <img id="glass" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-glass.png" alt="Track for Glass"  title="Track for Glass" >
-    </div>
+    <img id="cardboard" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-cardboard.png"  alt="Track for Cardboard" title="Track for Cardboard" >
+</div>
     <div class="icon-imgs">
-        <img id="cans"  class="expand" src="http://recycle.oregonstate.edu/sites/fa.oregonstate.edu/files/cans.png"  alt="Track for Aluminum Cans" title="Track for Aluminum Cans" >
-    </div>
+    <img id="glass" class="expand" src="http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/recycling/images/button-recycle-guide-glass.png" alt="Track for Glass"  title="Track for Glass" >
+</div>
     <div class="icon-imgs">
-        <img id="plastic" class="expand" src="http://recycle.oregonstate.edu/sites/fa.oregonstate.edu/files/plastic.png"  alt="Track for Plastic" title="Track for Plastic" >
-    </div>
+    <img id="cans"  class="expand" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/cans.png"  alt="Track for Aluminum Cans" title="Track for Aluminum Cans" >
+</div>
     <div class="icon-imgs">
-        <img id="compost" class="expand" src="http://recycle.oregonstate.edu/sites/fa.oregonstate.edu/files/compost.png" alt="Track for Compost" title="Track for Compost" >
-    </div>
+    <img id="plastic" class="expand" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/plastic.png"  alt="Track for Plastic" title="Track for Plastic" >
+</div>
     <div class="icon-imgs">
-        <img id="landfill" class="expand" src="http://recycle.oregonstate.edu/sites/fa.oregonstate.edu/files/landfill.png" alt="Track for Landfill Waste" title="Track for Landfill Waste" >
-    </div>
+    <img id="compost" class="expand" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/compost.png" alt="Track for Compost" title="Track for Compost" >
+</div>
+    <div class="icon-imgs">
+    <img id="landfill" class="expand" src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/landfill.png" alt="Track for Landfill Waste" title="Track for Landfill Waste" >
+</div>
 </div>
 <p><iframe id="recycling_map" frameborder="0" scrolling="no" width="100%" height="600" src="http://recycle.oregonstate.edu/campus-recycling-interactive-map/all-0" marginheight="0" marginwidth="0" allowfullscreen ></iframe></p>
 
 <script>
-//Define the function of answering user's clicking on each image.
+$(".expand").css({"width":"160", "height":"160", "padding":"20px"});
+
 $.fn.getMap=(function(theUrl){
     return $(this).click(function () {
         $("#recycling_map").attr("src", theUrl);
@@ -71,9 +51,8 @@ $.fn.getMap=(function(theUrl){
     });
 });
 
-//fetch maps
 $(function() {
-    //$('#all').getMap('http://recycle.oregonstate.edu/campus-recycling-interactive-map/all-0');
+    $('#all').getMap('http://web.engr.oregonstate.edu/~niguang/all.html');
     $('#paper').getMap('http://recycle.oregonstate.edu/recycling-map/paper #map');
     $('#cardboard').getMap('http://recycle.oregonstate.edu/recycling-map/cardboard #map');
     $('#glass').getMap('http://recycle.oregonstate.edu/recycling-map/glass #map');
@@ -83,5 +62,26 @@ $(function() {
     $('#landfill').getMap('http://recycle.oregonstate.edu/recycling-map/landfill #map');
 });
 </script>
-</body>
-</html>
+</script>
+
+<style>
+#icon-row {
+  height: 100%;
+  background-color: #FEF6E4;
+  width: 100%;
+  white-space: nowrap;
+  display: table;
+}
+
+.icon-imgs {
+  vertical-align: middle;
+  padding: 13px;
+  display: table-cell;
+}
+
+.icon-imgs img {
+ max-width: 100%;
+ height: auto !important;
+}
+</style>
+
