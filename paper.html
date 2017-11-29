@@ -71,6 +71,10 @@
             font-family: 'Open sans', sans-serif;
             font-size: 18px;
         }
+
+	img.gm-fullscreen-control {
+		max-width: 164px !important;
+	}
     </style>
 </head>
 
@@ -80,7 +84,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
     <script>
-        var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype='' name='Garten' lat='44.9687' lng='-123.011' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://www.garten.org/services/admin/oregon/C19/' description='Mixed paper waste is sent to Garten where it is separated into ONP (i.e., newspaper) , SOP (i.e., office paper) , and OCC paper streams.' image='' image_source=''/><marker id='6' type='paper' subtype='ONP' name='Michelsen Packaging Company' lat='46.6041' lng='-120.515' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://michelsenpackaging.com/' description='ONP is sent to Michelsen to help produce molded pulp purple apple tray product for packaging fruits and other food products.' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image3.png' image_source='http://michelsenpackaging.com/recycling/'/><marker id='7' type='paper' subtype='' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='shipped directly to Pioneer Recycling' image='' image_source=''/><marker id='8' type='paper' subtype='' name='Pioneer Recycling Services' lat='45.4001' lng='-122.542' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='http://www.pioneerrs.com/project/clackamas/' description='Pioneer Recycling is a materials recovery facility. Paper is separated out from the commingled recycling waste they receive and is sold to companies in China and Indonesia where the material is processed and made into a variety of recycled paper products we see today.' image='' image_source=''/><marker id='9' type='paper' subtype='ONP' name='Northern Pacific Paper Company' lat='46.1268' lng='-122.98' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://norpacpaper.com/ ' description='ONP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image2.png' image_source='https://www.woodbizforum.com/weyerhaeuser-sells-printing-papers-business-in-the-us-to-one-rock-capital-partners/'/><marker id='21' type='paper' subtype='ONPSOP' name='Keyes Fiber' lat='47.4862' lng='-120.316' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://www.keyespackaging.com/ Now' description='NOP and SOP stream is turned into a pulp then molded into packaging trays for produce and other food products' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image1.png' image_source='http://www.keyespackaging.com/production/'/><marker id='22' type='paper' subtype='SOP' name='Georgia-Pacific Corporation' lat='44.6147' lng='-123.936' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='https://www.gp.com/' description='SOP stream sent to GP in Halsey to help produce containerboard for packaging purposes' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image5.png' image_source='https://greenberry.com/project/lithium-conversion/'/><marker id='24' type='paper' subtype='SOP' name='China' lat='44.5989' lng='-124.761' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='' description='low-grade mixed paper waste is baled and exported to China, which is the only buyer of low-grade mixed paper on the west coast ' image='' image_source=''/><\/markers>");
+        var xmlString = jQuery.parseXML("<markers><marker id='5' type='paper' subtype='' name='Garten' lat='44.9687' lng='-123.011' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://www.garten.org/services/admin/oregon/C19/' description='Mixed paper waste is sent to Garten where it is separated into ONP (i.e., newspaper) , SOP (i.e., office paper) , and OCC paper streams.' image='' image_source=''/><marker id='6' type='paper' subtype='ONP' name='Michelsen Packaging Company' lat='46.6041' lng='-120.515' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://michelsenpackaging.com/' description='ONP is sent to Michelsen to help produce molded pulp &quot;purple apple tray&quot; product for packaging fruits and other food products.' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image3.png' image_source='http://michelsenpackaging.com/recycling/'/><marker id='7' type='paper' subtype='' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='shipped directly to Pioneer Recycling' image='' image_source=''/><marker id='8' type='paper' subtype='' name='Pioneer Recycling Services' lat='45.4001' lng='-122.542' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='http://www.pioneerrs.com/project/clackamas/' description='Pioneer Recycling is a materials recovery facility. Paper is separated out from the commingled recycling waste they receive and is sold to companies in China and Indonesia where the material is processed and made into a variety of recycled paper products we see today.' image='' image_source=''/><marker id='9' type='paper' subtype='ONP' name='Northern Pacific Paper Company' lat='46.1268' lng='-122.98' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://norpacpaper.com/ ' description='ONP streams are sent to NORPAC to help produce pulp/copy machine paper. These are then sold to news printers like the Oregonian, The Seattle Times and Wenatchee World' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image2.png' image_source='https://www.woodbizforum.com/weyerhaeuser-sells-printing-papers-business-in-the-us-to-one-rock-capital-partners/'/><marker id='21' type='paper' subtype='ONP&amp;SOP' name='Keyes Fiber' lat='47.4862' lng='-120.316' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='http://www.keyespackaging.com/ Now' description='NOP and SOP stream is turned into a pulp then molded into packaging trays for produce and other food products' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image1.png' image_source='http://www.keyespackaging.com/production/'/><marker id='22' type='paper' subtype='SOP' name='Georgia-Pacific Corporation' lat='44.6147' lng='-123.936' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='https://www.gp.com/' description='SOP stream sent to GP in Halsey to help produce containerboard for packaging purposes' image='http://fa.oregonstate.edu/sites/fa.oregonstate.edu/files/image5.png' image_source='https://greenberry.com/project/lithium-conversion/'/><marker id='24' type='paper' subtype='SOP' name='China' lat='44.5989' lng='-124.761' last_name='Garten' last_lat='44.9687' last_lng='-123.011' hyperlink='' description='low-grade mixed paper waste is baled and exported to China, which is the only buyer of low-grade mixed paper on the west coast ' image='' image_source=''/><\/markers>");
 
         //Set up the map
         function initMap() {
@@ -137,7 +141,7 @@
                     line.setOptions({
                         strokeColor: 'rgba(255,0,0,0.5)'
                     });
-                } else if (subtype == "ONPSOP") {
+                } else if (subtype == "ONP&SOP") {
                     line.setOptions({
                         strokeColor: 'rgba(255,0,255,0.5)'
                     });
@@ -247,14 +251,14 @@
         }
 
         //remove the redundancy from the editor
-       /* var selectors = ["ul", "#osu-top-hat", "#mobile-icon-menu", "#footer", ".slicknav_menu", "#skip-link",
+       var selectors = ["ul", "#osu-top-hat", "#mobile-icon-menu", "#footer", ".slicknav_menu", "#skip-link",
             ".group-header", "#search-overlay", "#messages", "#page-title", ".tabs"
         ];
         var redundancy = selectors.join(", ");
         $(document).delay(400).queue(function() {
             $(redundancy).remove();
             $(this).dequeue();
-        }); */
+        });
         $('#map').css({
             position: "absolute",
             width: "100%",
