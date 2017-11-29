@@ -71,6 +71,10 @@
             font-family: 'Open sans', sans-serif;
             font-size: 18px;
         }
+
+	img.gm-fullscreen-control {
+		max-width: 164px !important;
+	}
     </style>
 </head>
 
@@ -80,9 +84,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
 <script>
-        var xmlString = jQuery.parseXML("<markers><marker id='17' type='glass' subtype='' name='Glass to Glass' lat='45.5833' lng='-122.678' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='' description='Glass is sent to Glass to Glass where it is color-sorted and processed into glass cullets (i.e. small pieces of glass)' image='' image_source=''/> <marker id='18' type='glass' subtype='' name='Owens-Illinois glass manufacturing plant' lat='45.7978' lng='-122.996' last_name='Glass to Glass' last_lat='45.5833' last_lng='-122.678' hyperlink='http://www.packaging-gateway.com/projects/glass-to-glass-recycling-facility-portland-oregon/' description='The glass cullets are then purchased by O-I and they produces mainly beer bottles bought by local microbreweries' image='' image_source=''/><\/markers>");
-
-        //Set up the map
+                    var xmlString = jQuery.parseXML("<markers><marker id='17' type='glass' subtype='' name='Glass to Glass' lat='45.5833' lng='-122.678' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='' description='Glass is sent to Glass to Glass where it is color-sorted and processed into glass cullets (i.e. small pieces of glass)' image='' image_source=''/><marker id='18' type='glass' subtype='' name='Owens-Illinois glass manufacturing plant' lat='45.7978' lng='-122.996' last_name='Glass to Glass' last_lat='45.5833' last_lng='-122.678' hyperlink='http://www.packaging-gateway.com/projects/glass-to-glass-recycling-facility-portlandoregon/' description='The glass cullets are then purchased by O-I and they produces mainly beer bottles bought by local microbreweries' image='' image_source=''/><marker id='25' type='glass' subtype='' name='OBRC' lat='45.5486' lng='-122.723' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='https://www.obrc.com/ ' description='The glass cullets are then purchased by O-I and they produces mainly beer bottles bought by local microbreweries' image='' image_source=''/><marker id='26' type='glass' subtype='' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='baled and shipped directly to Glass to Glass' image='' image_source=''/><marker id='27' type='glass' subtype='' name='Glass to Glass' lat='45.5833' lng='-122.678' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='' description='Glass is sent to Glass to Glass where it is color-sorted and processed into glass cullets (i.e. small pieces of glass)' image='' image_source=''/><\/markers>");
+//Set up the map
         function initMap() {
             //Set up the marker of OSU campus
             var OSU = {
