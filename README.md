@@ -14,3 +14,13 @@ MySql
 PHP
 It’s estimated to 300 hours of work in total.
 
+Paper edit page: http://fa.oregonstate.edu/node/218811/edit
+Cardboard edit page: http://recycle.oregonstate.edu/node/218806/edit
+Glass edit page: http://recycle.oregonstate.edu/node/218816/edit
+Cans edit page: http://recycle.oregonstate.edu/node/218821/edit
+Plastic edit page: http://recycle.oregonstate.edu/node/218826/edit
+Compost edit page: http://recycle.oregonstate.edu/node/218831/edit
+Landfill edit page: http://recycle.oregonstate.edu/node/218836/edit
+All edit page: http://recycle.oregonstate.edu/node/218926/edit
+
+Main page: http://recycle.oregonstate.edu/recycling-map
