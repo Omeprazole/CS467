@@ -1,26 +1,12 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Plastic Map</title>
     <style>
-        /* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
-
         #map {
-            height: 100%;
-        }
-
-        /* Optional: Makes the sample page fill the window. */
-
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
+            height: 400px;
+            width: 100%;
+            overflow: visible
         }
 
         /*InfoWindow*/
@@ -43,9 +29,10 @@
 
         /*Company name*/
 
-        .iw-container .company-name {
+        .iw-container .company-name a {
             color: white;
             font-size: 20px;
+            text-decoration: none;
         }
 
         /*recycling type*/
@@ -79,145 +66,182 @@
         .gm-style-iw {
             top: 20px !important;
         }
+
+        .description {
+            font-family: 'Open sans', sans-serif;
+            font-size: 18px;
+        }
+
+	img.gm-fullscreen-control {
+		max-width: 164px !important;
+	}
     </style>
 </head>
 
 <body>
-    <div id="map">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
-        <script>
-            //Define the function of dumping the xml file
-            function downloadUrl(url, callback) {
-                var request = window.ActiveXObject ?
-                    new ActiveXObject('Microsoft.XMLHTTP') :
-                    new XMLHttpRequest;
-                request.onreadystatechange = function() {
-                    if (request.readyState == 4) {
-                        //request.onreadystatechange = doNothing;
-                        callback(request, request.status);
-                    }
-                };
-                request.open('GET', url, true);
-                request.send(null);
+<div id="map"></div>
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
+<script>
+        var xmlString = jQuery.parseXML("<markers><marker id='13' type='plastic' subtype='' name='OBRC' lat='45.5486' lng='-122.723' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='https://www.obrc.com/ ' description=' PET (polyethylene terephthalate) material is sorted, granulated, washed, and baled' image='' image_source=''/><marker id='14' type='plastic' subtype='' name='ORPET' lat='45.8349' lng='-122.829' last_name='OBRC' last_lat='45.5486' last_lng='-122.723' hyperlink='https://www.obrc.com/Partners/ORPET' description='cleaned PET processed into PET flakes or RPET (Recycled PET)' image='' image_source=''/><marker id='15' type='plastic' subtype='' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='shipped directly to Pioneer Recycling ' image='' image_source=''/><marker id='16' type='plastic' subtype='' name='Pioneer Recycling Services' lat='45.4001' lng='-122.542' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='http://www.pioneerrs.com/project/clackamas/' description='' image='' image_source=''/><\/markers>");        //Set up the map
+        function initMap() {
+            //Set up the marker of OSU campus
+            var OSU = {
+                lat: 44.562854,
+                lng: -123.278977
+            };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                gestureHandling: 'greedy',
+                zoom: 8,
+                center: {
+                    lat: 45.512794,
+                    lng: -122.679565
+                },
+                fullscreenControl: true
+            });
+            var OSUimage = 'http://maps.google.com/mapfiles/ms/micons/recycle.png';
+            var OSUmarker = new google.maps.Marker({
+                position: OSU,
+                icon: OSUimage,
+                map: map,
+                title: 'Oregon State University'
+            });
+            //Define info window
+            var infowindow = new google.maps.InfoWindow();
+            //Define the symbol of line
+            var lineSymbol = {
+                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                scale: 3,
+                strokeColor: '#393'
+            };
+            //Define the function for the animated symbol
+            function animateCircle(line) {
+                var count = 0;
+                window.setInterval(function() {
+                    count = (count + 1) % 200;
+                    var icons = line.get('icons');
+                    icons[0].offset = (count / 2) + '%';
+                    line.set('icons', icons);
+                }, 20);
             }
-            //Set up the map
-            function initMap() {
-                //Set up the marker of OSU campus
-                var OSU = {
-                    lat: 44.562854,
-                    lng: -123.278977
-                };
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    gestureHandling: 'greedy',
-                    zoom: 8,
-                    center: {
-                        lat: 45.512794,
-                        lng: -122.679565
-                    }
-                });
-                var OSUimage = 'http://maps.google.com/mapfiles/ms/micons/recycle.png';
-                var OSUmarker = new google.maps.Marker({
-                    position: OSU,
-                    icon: OSUimage,
-                    map: map,
-                    title: 'Oregon State University'
-                });
-                //Define info window
-                var infowindow = new google.maps.InfoWindow();
-                //Define the symbol of line
-                var lineSymbol = {
-                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                    scale: 3,
-                    strokeColor: '#393'
-                };
-                //Define the function for the animated symbol
-                function animateCircle(line) {
-                    var count = 0;
-                    window.setInterval(function() {
-                        count = (count + 1) % 200;
-                        var icons = line.get('icons');
-                        icons[0].offset = (count / 2) + '%';
-                        line.set('icons', icons);
-                    }, 20);
-                }
-                //Call the function of dumping the XML file
-                downloadUrl('http://web.engr.oregonstate.edu/~niguang/getData.php?type="plastic"', function(data) {
-                    var xml = data.responseXML;
-                    var markers = xml.documentElement.getElementsByTagName('marker');
-                    Array.prototype.forEach.call(markers, function(markerElem) {
-                        var id = markerElem.getAttribute('id');
-                        var name = markerElem.getAttribute('name');
-                        var type = markerElem.getAttribute('type');
-                        var hyperlink = markerElem.getAttribute('hyperlink');
-                        var image = markerElem.getAttribute('image');
-                        var point = new google.maps.LatLng(
-                            parseFloat(markerElem.getAttribute('lat')),
-                            parseFloat(markerElem.getAttribute('lng')));
-                        var lastPoint = new google.maps.LatLng(
-                            parseFloat(markerElem.getAttribute('last_lat')),
-                            parseFloat(markerElem.getAttribute('last_lng')));
-                        var label = name.charAt(0);
-                        var desc = markerElem.getAttribute('description');
-                        //Set the line
-                        var line = new google.maps.Polyline({
-                            path: [lastPoint, point],
-                            strokeColor: '#778899',
-                            strokeOpacity: 1.0,
-                            strokeWeight: 2,
-                            icons: [{
-                                icon: lineSymbol,
-                                offset: '100%'
-                            }],
-                            map: map
-                        });
-                        //Set the animated symbol
-                        animateCircle(line);
-                        //Set the marker
-                        var marker = new google.maps.Marker({
-                            map: map,
-                            position: point,
-                            label: label
-                        });
-                        //Set the info window
-                        marker.addListener('mouseover', function() {
-                            infowindow.close();
-                            infowindow.setContent('<div class="iw-container"><div class="iw-header"><strong><div class="company-name">' + name + '</div></strong>' +
-                                '<div class="recyling-type">' + type + ' recycling</div><br>' +
-                                '<a href="' + hyperlink + '">' + hyperlink + '</a></div>' +
-                                '<img src="' + image + '"' + image + 'alt="Insert Image Here"></br>' +
-                                desc + '<br><br>' +
-                                '<img src="img/end.png" alt="Placeholder for end materials"></div>');
-                            //style infowindow
-                            google.maps.event.addListenerOnce(infowindow, 'domready', function() {
-                                //default parent container of iw-container
-                                iwDefault = $('.gm-style-iw').prev();
-                                //removes shadow
-                                iwDefault.children(':nth-child(2)').css({
-                                    'display': 'none'
-                                });
-                                //removes background color
-                                iwDefault.children(':nth-child(4)').css({
-                                    'display': 'none'
-                                });
-                                //brings tail on top of iw-container
-                                iwDefault.children(':nth-child(3)').css({
-                                    'z-index': '1'
-                                });
-                                //repositions close button
-                                $('.gm-style-iw').next().css({
-                                    'right': '40px',
-                                    'top': '21px'
-                                });
+
+            //place markers
+            function placeMarkers() {
+                var xml = xmlString;
+                var markers = xml.documentElement.getElementsByTagName('marker');
+                Array.prototype.forEach.call(markers, function(markerElem) {
+                    var id = markerElem.getAttribute('id');
+                    var name = markerElem.getAttribute('name');
+                    var type = markerElem.getAttribute('type');
+                    var hyperlink = markerElem.getAttribute('hyperlink');
+                    var image = markerElem.getAttribute('image');
+                    var point = new google.maps.LatLng(
+                        parseFloat(markerElem.getAttribute('lat')),
+                        parseFloat(markerElem.getAttribute('lng')));
+                    var lastPoint = new google.maps.LatLng(
+                        parseFloat(markerElem.getAttribute('last_lat')),
+                        parseFloat(markerElem.getAttribute('last_lng')));
+                    var label = name.charAt(0);
+                    var desc = markerElem.getAttribute('description');
+                    var subtype = markerElem.getAttribute('subtype');
+                    var img_source = markerElem.getAttribute('image_source');
+
+                    //Set the line
+                    var line = new google.maps.Polyline({
+                        path: [lastPoint, point],
+                        strokeColor: '#778899',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2,
+                        icons: [{
+                            icon: lineSymbol,
+                            offset: '100%'
+                        }],
+                        map: map
+                    });
+                    //Set the animated symbol
+                    animateCircle(line);
+
+                    //Set the marker
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: point,
+                        label: label
+                    });
+                    //Set the info window
+                    marker.addListener('mouseover', function() {
+                        infowindow.close();
+
+                        infowindow.setContent('<div class="iw-container">' +
+                            '<div class="iw-header"><strong><div class="company-name">' +
+                            '<a href="' + hyperlink + '" target="_blank">' +
+                            name + '<\/a><\/div><\/strong>' +
+                            '<div class="recyling-type">' + type + ' recycling<\/div><br>' +
+                            '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '<\/a><\/div>' +
+                            '<a href="' + img_source + '" target="_blank">' +
+                            '<img src="' + image + '"' + image + '><\/a>' +
+                            '<p id="imgsource">(Image source: ' +
+                            '<a href="' + img_source + '" target="_blank">' + img_source +
+                            '<\/a>)<\/p><p class="description">' + desc + '<\/p>' +
+                            //'<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"' +
+                            //'alt="Placeholder for end materials">' +
+                            '<\/div>');
+
+                        //style infowindow
+                        google.maps.event.addListenerOnce(infowindow, 'domready', function() {
+                            //default parent container of iw-container
+                            iwDefault = $('.gm-style-iw').prev();
+                            //removes shadow
+                            iwDefault.children(':nth-child(2)').css({
+                                'display': 'none'
                             });
-                            //open infowindow
-                            infowindow.open(map, marker);
+                            //removes background color
+                            iwDefault.children(':nth-child(4)').css({
+                                'display': 'none'
+                            });
+                            //brings tail on top of iw-container
+                            iwDefault.children(':nth-child(3)').css({
+                                'z-index': '1'
+                            });
+                            //repositions close button
+                            $('.gm-style-iw').next().css({
+                                'right': '40px',
+                                'top': '21px'
+                            });
+                            //remove img source when none
+                            if (img_source == "") {
+                                $('#imgsource').remove();
+                            }
                         });
+
+                        infowindow.open(map, marker);
                     });
                 });
-            }
-        </script>
-    </div>
+            };
+            placeMarkers();
+        }
+
+        //Remove the style of the editor
+        var elements = document.querySelectorAll('link[rel=stylesheet]');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].parentNode.removeChild(elements[i]);
+        }
+
+        //remove the redundancy from the editor
+        var selectors = ["ul", "#osu-top-hat", "#mobile-icon-menu", "#footer", ".slicknav_menu", "#skip-link",
+            ".group-header", "#search-overlay", "#messages", "#page-title", ".tabs"
+        ];
+        var redundancy = selectors.join(", ");
+        $(document).delay(400).queue(function() {
+            $(redundancy).remove();
+            $(this).dequeue();
+        });
+        $('#map').css({
+            position: "absolute",
+            width: "100%",
+            height: "100%"
+        });
+    </script>
 </body>
 
-</html>>
+</html>
