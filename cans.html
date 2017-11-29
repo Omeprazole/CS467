@@ -6,10 +6,10 @@
         #map {
             height: 400px;
             width: 100%;
-overflow: visible
+            overflow: visible
         }
 
- /*InfoWindow*/
+        /*InfoWindow*/
 
         .iw-container {
             font-family: 'Gudea', Arial, Helvetica, Verdana, sans-serif;
@@ -29,9 +29,10 @@ overflow: visible
 
         /*Company name*/
 
-        .iw-container .company-name {
+        .iw-container .company-name a {
             color: white;
             font-size: 20px;
+            text-decoration: none;
         }
 
         /*recycling type*/
@@ -65,25 +66,25 @@ overflow: visible
         .gm-style-iw {
             top: 20px !important;
         }
+
+        .description {
+            font-family: 'Open sans', sans-serif;
+            font-size: 18px;
+        }
+
+	img.gm-fullscreen-control {
+		max-width: 164px !important;
+	}
     </style>
 </head>
 
 <body>
-    <div id="map"></div>
-
-<!--removes CSS so map/markers can be drawn-->
-<script>
-var elements = document.querySelectorAll('link[rel=stylesheet]');
-for(var i=0;i<elements.length;i++){
-    elements[i].parentNode.removeChild(elements[i]);
-}
-</script>
-<script src="https://www.doogal.co.uk/js/FullScreenControl.js" type="text/javascript"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+<div id="map"></div>
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_IYVSOyU89P04LDsSj1h5kJcB6DPN8nQ&callback=initMap"></script>
-    <script>
+<script>
 var xmlString = jQuery.parseXML("<markers><marker id='10' type='aluminum cans' subtype='' name='OBRC' lat='45.5486' lng='-122.723' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='https://www.obrc.com/ ' description='' image='' image_source=''/><marker id='11' type='aluminum cans' subtype='' name='Republic Services' lat='44.5923' lng='-123.252' last_name='Oregon State University Campus' last_lat='44.5629' last_lng='-123.279' hyperlink='http://local.republicservices.com/site/Corvallis-OR' description='shipped directly to Pioneer Recycling' image='' image_source=''/><marker id='12' type='aluminum cans' subtype='' name='Pioneer Recycling Services' lat='45.4001' lng='-122.542' last_name='Republic Services' last_lat='44.5923' last_lng='-123.252' hyperlink='http://www.pioneerrs.com/project/clackamas/' description='' image='' image_source=''/><\/markers>");
-
         //Set up the map
         function initMap() {
             //Set up the marker of OSU campus
@@ -92,16 +93,14 @@ var xmlString = jQuery.parseXML("<markers><marker id='10' type='aluminum cans' s
                 lng: -123.278977
             };
             var map = new google.maps.Map(document.getElementById('map'), {
-                fullscreenControl: false,
                 gestureHandling: 'greedy',
                 zoom: 8,
                 center: {
                     lat: 45.512794,
                     lng: -122.679565
-                }
+                },
+                fullscreenControl: true
             });
-            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(FullScreenControl(map));
-
             var OSUimage = 'http://maps.google.com/mapfiles/ms/micons/recycle.png';
             var OSUmarker = new google.maps.Marker({
                 position: OSU,
@@ -109,17 +108,14 @@ var xmlString = jQuery.parseXML("<markers><marker id='10' type='aluminum cans' s
                 map: map,
                 title: 'Oregon State University'
             });
-
             //Define info window
             var infowindow = new google.maps.InfoWindow();
-
             //Define the symbol of line
             var lineSymbol = {
                 path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                 scale: 3,
                 strokeColor: '#393'
             };
-
             //Define the function for the animated symbol
             function animateCircle(line) {
                 var count = 0;
@@ -149,6 +145,8 @@ var xmlString = jQuery.parseXML("<markers><marker id='10' type='aluminum cans' s
                         parseFloat(markerElem.getAttribute('last_lng')));
                     var label = name.charAt(0);
                     var desc = markerElem.getAttribute('description');
+                    var subtype = markerElem.getAttribute('subtype');
+                    var img_source = markerElem.getAttribute('image_source');
 
                     //Set the line
                     var line = new google.maps.Polyline({
@@ -162,7 +160,6 @@ var xmlString = jQuery.parseXML("<markers><marker id='10' type='aluminum cans' s
                         }],
                         map: map
                     });
-
                     //Set the animated symbol
                     animateCircle(line);
 
@@ -172,16 +169,24 @@ var xmlString = jQuery.parseXML("<markers><marker id='10' type='aluminum cans' s
                         position: point,
                         label: label
                     });
-
                     //Set the info window
                     marker.addListener('mouseover', function() {
                         infowindow.close();
-                        infowindow.setContent('<div class="iw-container"><div class="iw-header"><strong><div class="company-name">' + name + '<\/div><\/strong>' +
+
+                        infowindow.setContent('<div class="iw-container">' +
+                            '<div class="iw-header"><strong><div class="company-name">' +
+                            '<a href="' + hyperlink + '" target="_blank">' +
+                            name + '<\/a><\/div><\/strong>' +
                             '<div class="recyling-type">' + type + ' recycling<\/div><br>' +
-                            '<a href="' + hyperlink + '">' + hyperlink + '<\/a><\/div>' +
-                            '<img src="' + image + '"' + image + 'alt="Insert Image Here"><\/br>' +
-                            desc + '<br><br>' +
-                            '<img src="img/end.png" alt="Placeholder for end materials"><\/div>');
+                            '<a href="' + hyperlink + '" target="_blank">' + hyperlink + '<\/a><\/div>' +
+                            '<a href="' + img_source + '" target="_blank">' +
+                            '<img src="' + image + '"' + image + '><\/a>' +
+                            '<p id="imgsource">(Image source: ' +
+                            '<a href="' + img_source + '" target="_blank">' + img_source +
+                            '<\/a>)<\/p><p class="description">' + desc + '<\/p>' +
+                            //'<img src="http://web.engr.oregonstate.edu/~leame/Interactive_Map/img/end.png"' +
+                            //'alt="Placeholder for end materials">' +
+                            '<\/div>');
 
                         //style infowindow
                         google.maps.event.addListenerOnce(infowindow, 'domready', function() {
@@ -204,17 +209,40 @@ var xmlString = jQuery.parseXML("<markers><marker id='10' type='aluminum cans' s
                                 'right': '40px',
                                 'top': '21px'
                             });
+                            //remove img source when none
+                            if (img_source == "") {
+                                $('#imgsource').remove();
+                            }
                         });
 
-                        //open infowindow
                         infowindow.open(map, marker);
                     });
                 });
             };
             placeMarkers();
         }
-    </script>
 
+        //Remove the style of the editor
+        var elements = document.querySelectorAll('link[rel=stylesheet]');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].parentNode.removeChild(elements[i]);
+        }
+
+        //remove the redundancy from the editor
+        var selectors = ["ul", "#osu-top-hat", "#mobile-icon-menu", "#footer", ".slicknav_menu", "#skip-link",
+            ".group-header", "#search-overlay", "#messages", "#page-title", ".tabs"
+        ];
+        var redundancy = selectors.join(", ");
+        $(document).delay(400).queue(function() {
+            $(redundancy).remove();
+            $(this).dequeue();
+        });
+        $('#map').css({
+            position: "absolute",
+            width: "100%",
+            height: "100%"
+        });
+    </script>
 </body>
 
 </html>
